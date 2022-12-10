@@ -1,0 +1,38 @@
+.navigation {
+  font-weight: 500;
+}
+
+.navigation__signup {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navigation__signin {
+  background-color: #2BE080;
+  border: none;
+  border-radius: 3%;
+  -webkit-border-radius: 3%;
+  -moz-border-radius: 3%;
+  -ms-border-radius: 3%;
+  -o-border-radius: 3%;
+  padding: 9px 20px;
+}
+
+@media screen and (min-width: 321px) {
+  .navigation__signin {
+    margin-left: 31px;
+  }
+  .navigation {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .navigation__signin {
+    margin-left: 14px;
+  }
+
+  .navigation {
+    font-size: 10px;
+  }
+}
