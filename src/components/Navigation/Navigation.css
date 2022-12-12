@@ -2,6 +2,18 @@
   font-weight: 500;
 }
 
+.link {
+  transition: opacity .5s;
+  -webkit-transition: opacity .5s;
+  -moz-transition: opacity .5s;
+  -ms-transition: opacity .5s;
+  -o-transition: opacity .5s;
+}
+
+.link:hover {
+  opacity: .8;
+}
+
 .navigation__signup {
   color: #fff;
   text-decoration: none;
