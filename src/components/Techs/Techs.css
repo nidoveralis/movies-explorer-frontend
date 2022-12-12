@@ -1,7 +1,7 @@
 .section__title {
   font-weight: 400;
   margin: 0;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.04em;
   border-bottom: 1px solid #000;
 }
 
@@ -17,13 +17,12 @@
 
 .techs__header {
   font-weight: 400;
+  font-size: 50px;
   margin: 0;
-  letter-spacing: -1.9px;
+  letter-spacing: -0.04em;
 }
 
 .techs__subtitle {
-  font-size: 14px;
-  line-height: 20px;
   margin: 0;
   max-width: 460px;
   text-align: center;
@@ -45,7 +44,6 @@
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
-  font-size: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,6 +70,11 @@
     margin-bottom: 25px;
   }
 
+  .techs__subtitle {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
   .techs-list {
     margin-top: 100px;
   }
@@ -79,17 +82,44 @@
   .techs-list__item {
     min-width: 90px;
     min-height: 60px;
-  }
+    font-size: 14px;
 
+  }
 }
 
 @media screen and (max-width: 768px) {
   .section__title {
-    font-size: 22px;
+    font-size: 21px;
+    padding-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .techs {
+    padding: 92px 50px 73px;
+  }
+
+  .techs__content {
+    margin-top: 82px;
+  }
+
+  .techs__header {
+    margin-bottom: 20px;
+  }
+
+  .techs__subtitle {
+    font-size: 12px;
+    line-height: 18px;
   }
 
   .techs-list {
     grid-template-columns: repeat(auto-fit, 84px);
+    margin-top: 83px;
+  }
+
+  .techs-list__item {
+    min-width: 84px;
+    min-height: 57px;
+    font-size: 12px;
   }
   
 }

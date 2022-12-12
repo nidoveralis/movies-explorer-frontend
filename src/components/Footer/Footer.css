@@ -24,7 +24,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 18px;
 }
 
 .footer-list {
@@ -58,15 +57,26 @@
 
   .footer {
     padding: 39px 70px 19px;
-    
+  }
+
+  .footer__content {
+    margin-top: 18px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .footer__title {
-    font-size: 22px;
+    font-size: 13px;
+    padding-bottom: 19px;
   }
-  
+
+  .footer {
+    padding: 47px 30px 16px;
+  }
+
+  .footer__content {
+    margin-top: 19px;
+  }
 }
 
 @media screen and (max-width: 320px) {

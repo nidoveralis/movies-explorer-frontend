@@ -5,7 +5,7 @@
 .section__title {
   font-weight: 400;
   margin: 0;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.04em;
   border-bottom: 1px solid #000;
 }
 
@@ -28,7 +28,6 @@
 }
 
 .aboutProject-grid {
-  margin-top: 110px;
   display: grid;
   grid-template-columns: 1fr 4fr;
   row-gap: 5px;
@@ -56,7 +55,6 @@
 @media screen and (min-width: 769px) {
   .aboutProject {
     padding: 113px 70px 100px;
-    
   }
 
   .section__title {
@@ -82,23 +80,46 @@
   }
 
   .aboutProject-grid {
-    /*grid-template-columns: 228px 912px;*/
+    margin-top: 110px;
     grid-template-rows: repeat(2, 36px);
+
   }
 }
 
 @media screen and (max-width: 768px) {
   .aboutProject {
-    padding: 90px 50px;
+    padding: 92px 50px 80px;
   }
 
   .section__title {
     font-size: 22px;
+    padding-bottom: 24px;
+    letter-spacing: -0.01em;  }
+
+  .aboutProject-info {
+    align-items: flex-start;
+    margin-top: 69px;
+  }
+
+  .aboutProject-info__title {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 23px;
+  }
+
+  .aboutProject-info__subtitle {
+    font-size: 12px;
+    line-height: 18px;
   }
 
   .aboutProject-grid {
-    /*grid-template-columns: 140px 528px;*/
+    margin-top: 107px;
     grid-template-rows: repeat(2, 36px);
+
+  }
+
+  .aboutProject-grid__item {
+    padding-left: 6px;
   }
 
 }
