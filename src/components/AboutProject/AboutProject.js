@@ -18,7 +18,7 @@ function AboutProject() {
         <p className="aboutProject-grid__item aboutProject-grid__item_theme-green">1 неделя</p>
         <p className="aboutProject-grid__item aboutProject-grid__item_theme-grey">4 недели</p>
         <p className="aboutProject-grid__item grey_font">Back-end</p>
-        <p className="aboutProject-grid__item">Front-end</p>
+        <p className="aboutProject-grid__item grey_font">Front-end</p>
       </div>
     </section>
   )

@@ -1,7 +1,6 @@
 .section__title {
   font-weight: 400;
   margin: 0;
-  letter-spacing: -0.04em;
   border-bottom: 1px solid #000;
 }
 
@@ -32,14 +31,13 @@
   grid-column: 1/3;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 75%;
 }
 
 .aboutme__image {
   grid-column: 3/4;
   grid-row: 1/3;
   justify-self: end;
+  margin-left: 51px;
 }
 
 .aboutme__title {
@@ -78,12 +76,19 @@
     padding: 112px 70px 101px;
   }
 
+  .aboutme__conteiner {
+    grid-template-rows: 1fr 46px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .aboutme__title {
     font-size: 50px;
+    margin-bottom: 19px;
   }
   
   .aboutme__subtitle {
     font-size: 18px;
+    margin-bottom: 27px;
   }
 
   .aboutme__text {
@@ -102,19 +107,25 @@
 
   .aboutme {
     padding: 93px 50px 73px;
-    
+  }
+
+  .aboutme__conteiner {
+    grid-template-rows: 1fr 46px;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .aboutme__title {
     font-size: 40px;
+    margin-bottom: 14px;
   }
   
   .aboutme__subtitle {
     font-size: 12px;
+    margin-bottom: 20px;
   }
 
   .aboutme__image {
-    max-height: 307px;
+    margin-left: 51px;
   }
 
   .aboutme__text {
@@ -127,5 +138,50 @@
 @media screen and (max-width: 320px) {
   .section__title {
     font-size: 18px;
+    padding-bottom: 27px;
+    letter-spacing: -0.04em;
+  }
+
+  .aboutme {
+    padding: 67px 14px;
+  }
+
+  .aboutme__conteiner {
+    grid-template-rows: 352px 1fr 46px;
+    grid-template-columns: 1fr;
+    margin-top: 60px;
+  }
+
+  .aboutme__content {
+    grid-row: 2/3;
+    margin-top: 40px;
+  }
+
+  .aboutme__image {
+    grid-row: 1/2;
+    grid-column: 1/2;
+    margin-left: 0;
+    height: 100%;
+  }
+
+  .aboutme-link {
+    grid-row: 3/4;
+  }
+
+  .aboutme__title {
+    font-size: 30px;
+    line-height: 36px;
+    margin-bottom: 20px;
+  }
+
+  .aboutme__subtitle {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .aboutme__text {
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 11px;
   }
 }
