@@ -1,19 +1,25 @@
+.search {
+  border-bottom: 1px solid #E8E8E8;
+  padding-bottom: 69px;
+}
+
 .search-form {
   background-color: #F9F9F9;
   height: 72px;
-  width: 100%;
   border-radius: 9px;
   -webkit-border-radius: 9px;
   -moz-border-radius: 9px;
   -ms-border-radius: 9px;
   -o-border-radius: 9px;
-  padding: 16px 19px;
+  padding: 0 19px;
   font-size: 18px;
   display: flex;
 }
 
 .search-form__fieldset {
   border: none;
+  padding: 0;
+  margin-left: 8px;
   width: 100%;
 }
 
@@ -32,12 +38,10 @@
   -ms-border-radius: 48px;
   -o-border-radius: 48px;
   height: 34px;
+  width: 78px;
   color: #fff;
   border: none;
-}
-
-.search-form__img {
-  margin-right: 10px;
+  font-size: 11px;
 }
 
 .search-form__line {

@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-right: 11px;
 }
 
 .filter__title {
@@ -20,7 +21,11 @@
   -o-border-radius: 20px;
   cursor: pointer;
   background-color: #EBEBEB;
-  ;
+  transition: background-color .5s;
+  -webkit-transition: background-color .5s;
+  -moz-transition: background-color .5s;
+  -ms-transition: background-color .5s;
+  -o-transition: background-color .5s;
 }
 
 .filter-tumblr_active {
