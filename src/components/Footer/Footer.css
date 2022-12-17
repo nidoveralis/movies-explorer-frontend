@@ -78,7 +78,7 @@
   }
 
   .footer {
-    padding: 47px 30px 16px;
+    padding: 38px 30px 16px;
   }
 
   .footer__content {
@@ -97,12 +97,12 @@
 
 @media screen and (max-width: 320px) {
   .footer {
-    padding: 118px 11px 21px;
+    padding: 38px 11px 21px;
   }
 
   .footer__title {
     font-size: 12px;
-    padding-bottom: 20px;
+    padding-bottom: 22px;
   }
 
   .footer__content {
