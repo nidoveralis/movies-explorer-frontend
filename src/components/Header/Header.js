@@ -1,14 +1,30 @@
 import './Header.css';
 import logo from '../../images/logo.svg';
-import {Route, Switch, Link} from 'react-router-dom';
+import { Switch, Route, Link} from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
-
-function Header() {
+function Header({theme}) {
+  const headerTheme = (`header ${theme}`); 
   return (
-    <header className="header header_theme_dark">
-      <img className="header__logo" src={logo} alt="Логотип" />
-      <Navigation />
+    <header className={headerTheme}>
+      <Switch>
+        <Route path='/signup'>
+          <Link to='/'>
+            <img className="header__logo" src={logo} alt="Логотип" />
+          </Link>
+        </Route>
+        <Route path='/signin'>
+          <Link to='/'>
+            <img className="header__logo" src={logo} alt="Логотип" />
+          </Link>
+        </Route>
+        <Route path='/'>
+          <Link to='/'>
+            <img className="header__logo" src={logo} alt="Логотип" />
+          </Link>
+          <Navigation />
+        </Route>
+      </Switch>
     </header>
   );
 }
