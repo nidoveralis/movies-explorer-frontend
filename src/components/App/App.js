@@ -1,3 +1,4 @@
+import React from 'react';
 import '../../vendor/normalize.css';
 import '../../vendor/fonts/fonts.css'
 import './App.css';
@@ -11,6 +12,12 @@ import Register from '../Register/Register';
 import { Route, Switch } from 'react-router-dom';
 
 function App() {
+  const [isCloseMenu, setCloseMenu] = React.useState(false);
+
+  function closeMenu() {
+    setCloseMenu(!isCloseMenu);
+  }
+
   return (
     <div className="App">
       
@@ -31,7 +38,7 @@ function App() {
         </Route>
 
         <Route path="/movies">
-          <Header />
+          <Header onClose={closeMenu} isOpenMenu={isCloseMenu}/>
           <Movies />
         </Route>
 
