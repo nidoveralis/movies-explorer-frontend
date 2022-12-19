@@ -76,6 +76,15 @@
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   margin-bottom: 16px;
+  transition: opacity .5s;
+  -webkit-transition: opacity .5s;
+  -moz-transition: opacity .5s;
+  -ms-transition: opacity .5s;
+  -o-transition: opacity .5s;
+}
+
+.element-form__button-submit {
+  opacity: .8;
 }
 
 .element-form__title {

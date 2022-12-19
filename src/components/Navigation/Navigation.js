@@ -3,7 +3,6 @@ import LogoProfile from '../../images/logo__profile.svg';
 import {Route, Switch, Link} from 'react-router-dom';
 
 function Navigation(props) {
-
   const classNameMenu = `navigation__menu ${props.isOpenMenu ? "navigation__menu_opened" : ""}`;
   const classNameCloseButton = `navigation__close ${props.isOpenMenu ? "navigation__close_active" : ""}`;
 

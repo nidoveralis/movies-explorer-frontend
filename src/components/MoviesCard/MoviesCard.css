@@ -32,6 +32,7 @@
   -moz-transition: opacity .5s;
   -ms-transition: opacity .5s;
   -o-transition: opacity .5s;
+  cursor: pointer;
 }
 
 .moviesCard-button__title {
@@ -68,6 +69,11 @@
 }
 
 .moviesCard-button_remove {
+  width: 21px;
+  background-color: #F9F9F9; 
+}
+
+.moviesCard-button_saved {
   width: 21px;
   background-color: #FF3055;
 }

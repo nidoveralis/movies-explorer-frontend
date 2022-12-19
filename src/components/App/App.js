@@ -9,13 +9,15 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Login from '../Login/Login'
 import Register from '../Register/Register';
+import NotFound from '../NotFound/NotFound';
+import { MoviesSavedList, MoviesList } from '../../utils/moviesList';
 import { Route, Switch } from 'react-router-dom';
 
 function App() {
-  const [isCloseMenu, setCloseMenu] = React.useState(false);
+  const [isMenuOpen, setMenuOpen] = React.useState(false);
 
-  function closeMenu() {
-    setCloseMenu(!isCloseMenu);
+  function openMenu() {
+    setMenuOpen(!isMenuOpen);
   }
 
   return (
@@ -38,18 +40,22 @@ function App() {
         </Route>
 
         <Route path="/movies">
-          <Header onClose={closeMenu} isOpenMenu={isCloseMenu}/>
-          <Movies />
+          <Header onClose={openMenu} isOpenMenu={isMenuOpen}/>
+          <Movies cards={MoviesList} />
         </Route>
 
         <Route path="/saved-movies">
           <Header />
-          <SavedMovies />
+          <SavedMovies cards={MoviesSavedList} />
         </Route>
 
         <Route path="/profile">
           <Header />
           <Profile />
+        </Route>
+
+        <Route path="*">
+          <NotFound />
         </Route>
       </Switch>
 

@@ -91,7 +91,6 @@
 
   .navigation__link:first-child {
     font-weight: 500;
-    margin-right: 20px;
   }
 
   .link-profile__image {
@@ -110,20 +109,19 @@
 
   .navigation__menu {
     display: none;
-  }
-
-  .navigation__menu_opened {
     min-width: 44vw;
     height: 100vh;
     background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    position: absolute;
     z-index: 2;
     top: -37px;
     right: -29px;
     padding: 159px 90px;
-    opacity: 1;
+  }
+
+  .navigation__menu_opened {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
   }
 
   .navigation__links {
@@ -208,7 +206,23 @@
     font-size: 10px;
   }
 
-  .navigation__menu_opened {
-    min-width: 100vw;
+  .navigation__menu {
+    min-width: 94vw;
+    padding: 144px 10px 0;
+    right: -13px;
+  }
+
+  .navigation__close{
+    top: 15px;
+    right: 29px;
+  }
+
+  .link-profile {
+    margin: auto auto 45px;
+    padding: 0 11px;
+  }
+
+  .link-profile__image {
+    margin: 7px 7px 7px 0;
   }
 }

@@ -3,8 +3,9 @@ import logo from '../../images/logo.svg';
 import { Switch, Route, Link} from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
-function Header(props) {
-  const headerTheme = (`header ${props.theme}`); 
+function Header({ onClose, isOpenMenu, theme }) {
+  
+  const headerTheme = (`header ${theme}`); 
   return (
     <header className={headerTheme}>
       <Switch>
@@ -22,7 +23,7 @@ function Header(props) {
           <Link to='/'>
             <img className="header__logo" src={logo} alt="Логотип" />
           </Link>
-          <Navigation onClose={props.onClose} isOpenMenu={props.isOpenMenu} />
+          <Navigation onClose={onClose} isOpenMenu={isOpenMenu} />
         </Route>
       </Switch>
     </header>
