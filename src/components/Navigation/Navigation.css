@@ -28,13 +28,21 @@
   -moz-border-radius: 50px;
   -ms-border-radius: 50px;
   -o-border-radius: 50px;
-  width: 100px;
   display: flex;
   align-items: center;
+  padding: 6px 11px;
+}
+
+.link-profile__title {
+  margin: 0;
 }
 
 .navigation__signup {
   color: #fff;
+}
+
+.navigation__link {
+  font-size: 14px;
 }
 
 .navigation__signin {
@@ -49,7 +57,7 @@
 }
 
 .link_hidden {
-  opacity: 0;
+  display: none;
 }
 
 .navigation__close {
@@ -70,8 +78,15 @@
 
 @media screen and (min-width: 769px){
   .navigation__links {
-    width: 231px;
-    margin-right: 50px;
+    margin-right: 49px;
+  }
+
+  .navigation__link {
+    margin-left: 19px;
+  }
+
+  .link-profile {
+    font-size: 14px;
   }
 
   .navigation__link:first-child {
@@ -80,7 +95,7 @@
   }
 
   .link-profile__image {
-    margin: 9px 7px 12px 9px;
+    margin-right: 6px;
   }
 }
 
@@ -126,7 +141,7 @@
   }
 
   .link_hidden {
-    opacity: 1;
+    display: block;
   }
 
   .navigation__burger-menu {

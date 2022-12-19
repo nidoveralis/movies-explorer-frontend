@@ -19,12 +19,12 @@ function Navigation(props) {
               <button  className={classNameCloseButton} onClick={props.onClose}></button>
               <div className="navigation__links">
                 <Link to='/' className="navigation__link link link_hidden">Главная</Link>
-                <Link to='/movies' className="navigation__link link link_path">Фильмы</Link>
+                <Link to='/movies' className="navigation__link link">Фильмы</Link>
                 <Link to='/saved-movies' className="navigation__link link">Сохранённые фильмы</Link>
               </div>
               <Link to='/profile'  className="link-profile link ">
                 <img alt='Профиль' src={LogoProfile} className="link-profile__image" />
-                <p>Аккаунт</p>
+                <p className="link-profile__title">Аккаунт</p>
               </Link>
             </Route>
             <Route path='/saved-movies'>
@@ -34,8 +34,7 @@ function Navigation(props) {
               </div>
               <Link to='/profile'  className="link-profile link">
                 <img alt='Профиль' src={LogoProfile} className="link-profile__image" />
-                <p>Аккаунт</p>
-              </Link>
+                <p className="link-profile__title">Аккаунт</p>              </Link>
             </Route>
             <Route path='/profile'>
               <div className="navigation__links">
@@ -44,8 +43,7 @@ function Navigation(props) {
               </div>
               <Link to='/profile'  className="link-profile link">
                 <img alt='Профиль' src={LogoProfile} className="link-profile__image" />
-                <p>Аккаунт</p>
-              </Link>
+                <p className="link-profile__title">Аккаунт</p>              </Link>
             </Route>
 
             <Route path='/'>

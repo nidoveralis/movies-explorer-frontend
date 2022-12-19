@@ -56,6 +56,12 @@
   .filter {
     margin-right: 11px;
     background-color: #F9F9F9;
+    padding-right: 19px;
+    border-radius: 0 9px 9px 0;
+    -webkit-border-radius: 0 9px 9px 0;
+    -moz-border-radius: 0 9px 9px 0;
+    -ms-border-radius: 0 9px 9px 0;
+    -o-border-radius: 0 9px 9px 0;
   } 
 }
 
