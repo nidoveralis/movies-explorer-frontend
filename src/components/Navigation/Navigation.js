@@ -26,28 +26,34 @@ function Navigation(props) {
                 <p className="link-profile__title">Аккаунт</p>
               </Link>
             </Route>
-            <Route path='/saved-movies'>
+            <Route path='/saved-movie'>
+              <button  className={classNameCloseButton} onClick={props.onClose}></button>
               <div className="navigation__links">
+                <Link to='/' className="navigation__link link link_hidden">Главная</Link>
                 <Link to='/movies' className="navigation__link link">Фильмы</Link>
                 <Link to='/saved-movies' className="navigation__link link">Сохранённые фильмы</Link>
               </div>
-              <Link to='/profile'  className="link-profile link">
+              <Link to='/profile'  className="link-profile link ">
                 <img alt='Профиль' src={LogoProfile} className="link-profile__image" />
-                <p className="link-profile__title">Аккаунт</p>              </Link>
+                <p className="link-profile__title">Аккаунт</p>
+              </Link>
             </Route>
             <Route path='/profile'>
+              <button  className={classNameCloseButton} onClick={props.onClose}></button>
               <div className="navigation__links">
+                <Link to='/' className="navigation__link link link_hidden">Главная</Link>
                 <Link to='/movies' className="navigation__link link">Фильмы</Link>
                 <Link to='/saved-movies' className="navigation__link link">Сохранённые фильмы</Link>
               </div>
-              <Link to='/profile'  className="link-profile link">
+              <Link to='/profile'  className="link-profile link ">
                 <img alt='Профиль' src={LogoProfile} className="link-profile__image" />
-                <p className="link-profile__title">Аккаунт</p>              </Link>
-            </Route>
+                <p className="link-profile__title">Аккаунт</p>
+              </Link>
+            </Route> 
 
             <Route path='/'>
               <Link to='/signup' className="navigation__signup link">Регистрация</Link>
-              <Link to='/signin' className="navigation__signin">Войти</Link>
+              <Link to='/signin' className="navigation__signin link">Войти</Link>
             </Route>
         </Switch>
       </div>

@@ -58,10 +58,15 @@
   color: #FF3055;
 }
 
-.element-form__span-error {
+.element-form__span {
+  opacity: 0;
+}
+
+.element-form__span_error {
   color: #FF3055;
   font-size: 10px;
   line-height: 12px;
+  opacity: 1;
 }
 
 .element-form__button-submit {
@@ -76,6 +81,7 @@
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   margin-bottom: 16px;
+  cursor: pointer;
   transition: opacity .5s;
   -webkit-transition: opacity .5s;
   -moz-transition: opacity .5s;
@@ -83,8 +89,13 @@
   -o-transition: opacity .5s;
 }
 
-.element-form__button-submit {
+.element-form__button-submit:hover {
   opacity: .8;
+}
+
+.element-form__button-submit_error {
+  background-color: #F8F8F8;
+  color: #C2C2C2;
 }
 
 .element-form__title {

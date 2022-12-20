@@ -16,7 +16,7 @@ import { Route, Switch } from 'react-router-dom';
 function App() {
   const [isMenuOpen, setMenuOpen] = React.useState(false);
 
-  function openMenu() {
+  function openMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
   }
 

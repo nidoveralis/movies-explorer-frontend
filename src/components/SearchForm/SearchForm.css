@@ -46,6 +46,16 @@
   border: none;
   font-size: 11px;
   width: 69px;
+  cursor: pointer;
+  transition: opacity .5s;
+  -webkit-transition: opacity .5s;
+  -moz-transition: opacity .5s;
+  -ms-transition: opacity .5s;
+  -o-transition: opacity .5s;
+}
+
+.search-form__button:hover {
+  opacity: .8;
 }
 
 .search-form__line {
