@@ -113,6 +113,10 @@
     margin: 0 auto 41px 0;
   }
 
+  .element-form__buttons {
+    margin: auto 0 66px;
+  }
+
   .element-form__button-submit {
     font-size: 14px;
     line-height: 17px;
@@ -123,7 +127,7 @@
     line-height: 17px;
   }
 
-  .header__logo {
+  .header__logo_form  {
     margin-bottom: 37px;
   }
 
@@ -139,7 +143,7 @@
   }
 
   .element-form__buttons {
-    margin: auto 0 69px;
+    margin: auto 0 90px;
   }
 
   .element-form__button-submit {
@@ -152,7 +156,7 @@
     line-height: 17px;
   }
 
-  .header__logo {
+  .header__logo_form  {
     margin-bottom: 37px;
   }
 
@@ -165,7 +169,7 @@
     align-items: center;
   }
 
-  .header__logo {
+  .header__logo_form {
     margin-bottom: 47px;
   }
 

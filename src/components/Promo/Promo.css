@@ -106,7 +106,7 @@
 }
 
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 450px) {
   .promo {
     padding: 69px 10px 31px;
     display: flex;

@@ -71,6 +71,10 @@
     margin-top: 71px;
   }
 
+  .aboutProject-info__conteiner:first-child {
+    margin-right: 17px;
+  }
+
   .aboutProject-info__conteiner {
     max-width: 550px;
   }
@@ -129,16 +133,7 @@
 
 }
 
-@media screen and (max-width: 320px) {
-  .aboutProject {
-    padding: 73px 18px;
-  }
-  .section__title {
-    font-size: 28px;
-    padding-bottom: 29px;
-    letter-spacing: -0.04em;
-  }
-
+@media screen and (max-width: 520px) {
   .aboutProject-info {
     flex-direction: column;
     margin-top: 61px;
@@ -157,6 +152,18 @@
   .aboutProject-info__subtitle {
     font-size: 11px;
     line-height: 16px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .aboutProject {
+    padding: 73px 18px;
+  }
+
+  .section__title {
+    font-size: 28px;
+    padding-bottom: 29px;
+    letter-spacing: -0.04em;
   }
 
   .aboutProject-grid {

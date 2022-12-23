@@ -19,7 +19,7 @@ function Form({ title, submitButton, linkTitle, link}) {
   return(
       <section className='element'>
         <Link to='/'>
-          <img className="header__logo" src={logo} alt="Логотип" />
+          <img className="header__logo_form" src={logo} alt="Логотип" />
         </Link>
         <h2 className='element__title'>{title}</h2>
         <form className='element-form' noValidate>
