@@ -197,7 +197,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 460px) {
   .navigation__signin {
     margin-left: 14px;
   }

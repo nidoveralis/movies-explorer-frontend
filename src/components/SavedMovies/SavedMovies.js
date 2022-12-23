@@ -1,4 +1,5 @@
 import './SavedMovies.css';
+import Header from '../Header/Header';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import Footer from '../Footer/Footer';
@@ -6,11 +7,14 @@ import Footer from '../Footer/Footer';
 function SavedMovies({cards}) {
 
   return(
-    <section className="savedMovies">
+    <>
+      <Header />
+      <main className="savedMovies">
         <SearchForm />
         <MoviesCardList movies={cards} />
-        <Footer />
-    </section>
+    </main>
+    <Footer />
+    </>
   )
 }
 

@@ -8,26 +8,30 @@ function Header({ onClose, isOpenMenu, theme }) {
   const headerTheme = (`header ${theme}`); 
   return (
     <header className={headerTheme}>
-      <Switch>
-        <Route path='/signup'>
-          <Link to='/'>
-            <img className="header__logo" src={logo} alt="Логотип" />
-          </Link>
-        </Route>
-        <Route path='/signin'>
-          <Link to='/'>
-            <img className="header__logo" src={logo} alt="Логотип" />
-          </Link>
-        </Route>
-        <Route path='/'>
-          <Link to='/'>
-            <img className="header__logo" src={logo} alt="Логотип" />
-          </Link>
-          <Navigation onClose={onClose} isOpenMenu={isOpenMenu} />
-        </Route>
-      </Switch>
+      <Link to='/'>
+        <img className="header__logo" src={logo} alt="Логотип" />
+      </Link>
+      <Navigation onClose={onClose} isOpenMenu={isOpenMenu} />
     </header>
   );
 }
 
 export default Header;
+//<Switch>
+  //      <Route path='/signup'>
+    //      <Link to='/'>
+      //      <img className="header__logo" src={logo} alt="Логотип" />
+        //  </Link>
+  //      </Route>
+    //    <Route path='/signin'>
+      //    <Link to='/'>
+     //       <img className="header__logo" src={logo} alt="Логотип" />
+       //   </Link>
+     //   </Route>
+    //    <Route path='/'>
+      //    <Link to='/'>
+        //    <img className="header__logo" src={logo} alt="Логотип" />
+       //   </Link>
+         // <Navigation onClose={onClose} isOpenMenu={isOpenMenu} />
+    //    </Route>
+    //  </Switch>

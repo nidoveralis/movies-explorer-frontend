@@ -6,7 +6,7 @@ function Portfolio() {
     <section className="portfolio">
       <ul className="portfolio-list">Портфолио</ul>
         <li className="portfolio-list__item">
-          <a href="https://nidoveralis.github.io/how-to-learn/ link" target="_blank" className="portfolio-link link">
+          <a href="https://nidoveralis.github.io/how-to-learn" target="_blank" className="portfolio-link link">
           <p className="portfolio-link__subtitle">Статичный сайт</p>
           <img  className="portfolio-link__logo" src={LogoPortfolio} alt="Перейти по ссылке" />
           </a>

@@ -15,7 +15,7 @@ function SearchForm() {
         <div className="search-form__conteiner">
           <img src={LogeSearch} alt='Поиск' className="search-form__img" />
           <fieldset className="search-form__fieldset">
-            <input placeholder="Фильм" type='text' className="search-form__input"></input>
+            <input placeholder="Фильм" type='text' className="search-form__input" required />
           </fieldset>
         <button className="search-form__button">Найти</button>
         <span className="search-form__line"></span>

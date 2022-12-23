@@ -1,16 +1,21 @@
 import './Movies.css';
+import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function Movies({cards}) {
+function Movies({cards, openMenu, isMenuOpen}) {
   return(
-    <section className="movies">
-      <SearchForm />
-      <MoviesCardList movies={cards}/>
+    <>
+      <Header onClose={openMenu} isOpenMenu={isMenuOpen}/>
+      <main className="movies">
+        <SearchForm />
+        <MoviesCardList movies={cards}/>
+      </main>
       <Footer />
-    </section>
+    </>
+    
   )
 };
 export default Movies;

@@ -1,9 +1,12 @@
 import './Profile.css';
+import Header from '../Header/Header';
 
 function Profile() {
 
   return(
-    <section className='profile'>
+    <>
+      <Header />
+      <main className='profile'>
       <h2 className='profile__title'>Привет, Виталий!</h2>
       <div className='profile-info'>
         <div className='profile-info__conteiner'>
@@ -19,7 +22,8 @@ function Profile() {
         <a href='/#' className='profile__link'>Редактировать</a>
         <a href='/#' className='profile__link profile__link_out'>Выйти из аккаунта</a>
       </div>
-    </section>
+    </main>
+    </>
   )
 }
 

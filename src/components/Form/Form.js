@@ -1,6 +1,7 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import './Form.css';
+import logo from '../../images/logo.svg';
 
 function Form({ title, submitButton, linkTitle, link}) {
   const location = useLocation();
@@ -17,6 +18,9 @@ function Form({ title, submitButton, linkTitle, link}) {
 
   return(
       <section className='element'>
+        <Link to='/'>
+          <img className="header__logo" src={logo} alt="Логотип" />
+        </Link>
         <h2 className='element__title'>{title}</h2>
         <form className='element-form' noValidate>
           {location.pathname === '/signin'}
@@ -44,7 +48,7 @@ function Form({ title, submitButton, linkTitle, link}) {
             <p className='element-form__title'>{linkTitle}<a className='element-form__link' href='/#'>{link}</a></p>
           </div>
         </form>
-
+        
       </section>
   )
 }

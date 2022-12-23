@@ -135,7 +135,7 @@
   
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 555px) {
   .section__title {
     font-size: 18px;
     padding-bottom: 27px;
@@ -162,6 +162,7 @@
     grid-column: 1/2;
     margin-left: 0;
     height: 100%;
+    justify-self: center;
   }
 
   .aboutme-link {

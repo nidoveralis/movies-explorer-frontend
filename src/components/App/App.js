@@ -21,36 +21,30 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="app">
       
       <Switch>
       <Route exact path="/">
-          <Header theme={'header_theme-darck'}/>
           <Main />
         </Route>
 
         <Route path="/signin">
-          <Header theme={'header-sign'} />
           <Login />
         </Route>
         
         <Route path="/signup">
-          <Header theme={'header-sign'} />
           <Register />
         </Route>
 
         <Route path="/movies">
-          <Header onClose={openMenu} isOpenMenu={isMenuOpen}/>
-          <Movies cards={MoviesList} />
+          <Movies cards={MoviesList} onClose={openMenu} isOpenMenu={isMenuOpen} />
         </Route>
 
         <Route path="/saved-movies">
-          <Header />
           <SavedMovies cards={MoviesSavedList} />
         </Route>
 
         <Route path="/profile">
-          <Header />
           <Profile />
         </Route>
 
