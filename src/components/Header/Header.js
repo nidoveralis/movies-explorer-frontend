@@ -17,21 +17,3 @@ function Header({ onClose, isOpenMenu, theme }) {
 }
 
 export default Header;
-//<Switch>
-  //      <Route path='/signup'>
-    //      <Link to='/'>
-      //      <img className="header__logo" src={logo} alt="Логотип" />
-        //  </Link>
-  //      </Route>
-    //    <Route path='/signin'>
-      //    <Link to='/'>
-     //       <img className="header__logo" src={logo} alt="Логотип" />
-       //   </Link>
-     //   </Route>
-    //    <Route path='/'>
-      //    <Link to='/'>
-        //    <img className="header__logo" src={logo} alt="Логотип" />
-       //   </Link>
-         // <Navigation onClose={onClose} isOpenMenu={isOpenMenu} />
-    //    </Route>
-    //  </Switch>

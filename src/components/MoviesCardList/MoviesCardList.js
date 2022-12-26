@@ -7,7 +7,7 @@ function MoviesCardList({movies, cardDelete}) {
       <div className="moviesCardList__content">
           {
             movies.map(card=>(
-              <MoviesCard key={card._id} link={card.link} alt={card.alt} name={card.name}  time={card.time} statusSeved={card.statusSeved} cardDelete={cardDelete} />
+              <MoviesCard key={card._id} poster={card.image.url} name={card.nameRU}  duration={card.duration}  cardDelete={cardDelete} link={card.trailerLink} />
             ))
           }
       </div>
@@ -17,3 +17,5 @@ function MoviesCardList({movies, cardDelete}) {
 }
 
 export default MoviesCardList;
+
+//statusSeved={card.statusSeved}
