@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 74px;
+}
+
+.header_theme-darck {
+  background-color: #073042;
+  color: #fff;
+}
+
+@media screen and (min-width: 769px) {
+  .header {
+    padding: 0 70px;
+  }
+
+  .header-sign {
+    margin: 34px auto 0;
+    justify-content: start;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 0 30px;
+  }
+
+  .header-sign {
+    margin: 196px auto 0;
+    justify-content: start;
+  }
+}
+
+@media screen and (max-width: 464px) {
+  .header {
+    padding: 0 14px;
+  }
+
+}
