@@ -1,8 +1,8 @@
 const config = {
   baseUrl:'https://api.nomoreparties.co',
   headers: {
-    'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'Content-Type': 'application/json'
   }
 }
 

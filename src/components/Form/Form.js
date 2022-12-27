@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import './Form.css';
 import logo from '../../images/logo.svg';
 
-function Form({ title, submitButton, linkTitle, link, formValues, errServer }) {
+function Form({ title, submitButton, linkTitle, link, formValues, errServer, linkName }) {
   const location = useLocation();
   const [isValidInput, setIsValidInput] = React.useState(false);
   const [isErrorInput, setIsErrorInput] = React.useState({});
@@ -51,8 +51,8 @@ function Form({ title, submitButton, linkTitle, link, formValues, errServer }) {
           </fieldset>
           <div className='element-form__buttons' >
             <input type='submit' value={submitButton} className={buttonClass} disabled={!isValidInput} />
-            <span className={`element-form__span element-form__span_error`}>{errServer}</span>
-            <p className='element-form__title'>{linkTitle}<a className='element-form__link' href='/#'>{link}</a></p>
+            <span className='element-form__span_error form-error' >{errServer}</span>
+            <p className='element-form__title'>{linkTitle}<a className='element-form__link' href={link}>{linkName}</a></p>
           </div>
         </form>
         

@@ -5,7 +5,7 @@ function Register({formValues, errServer}) {
 
   return (
     <>
-      <Form title='Добро пожаловать!' submitButton='Зарегистрироваться' linkTitle='Уже зарегистрированы? ' link='Войти' formValues={formValues} errServer={errServer}/>
+      <Form title='Добро пожаловать!' submitButton='Зарегистрироваться' linkTitle='Уже зарегистрированы? ' linkName='Войти' link='/signin' formValues={formValues} errServer={errServer}/>
     </>
   )
 
