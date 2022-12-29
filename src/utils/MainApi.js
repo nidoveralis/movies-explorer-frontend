@@ -2,7 +2,10 @@ import config from "./utils";
 
 class Api {
   constructor(data) {
-    this._headers = data.headers;
+    this._headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
     this._baseUrl = 'http://localhost:3000';
   }
 
@@ -16,7 +19,7 @@ class Api {
   signUp(data) {
     return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
-      creditals: 'include',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
@@ -30,30 +33,84 @@ class Api {
   signIn(data) {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
-      headers: this._headers,
-      creditals: 'include',
-      body: JSON.stringify({
-        email: data.email,
-        password: data.password
-      }),
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body:JSON.stringify({
+      email: data.email,
+      password: data.password
     })
-    .then(res => res.json())
+    },
+    )
+    .then((response => response.json()))
     .then((data) => {
       if (data.token){
         return data;
       } 
     })
-  }
+  };
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      creditals: 'include',
-      headers: this._headers,
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
     })
     .then(res => this._getResponseData(res))
   }
 
+  setUserInfo(data) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        password: data.password
+      }) 
+    })
+    .then(res => this._getResponseData(res))
+  }
+
+  getMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(res => this._getResponseData(res))
+  }
+
+  addMovies(data) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+      body:JSON.stringify({
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: data.image,
+        trailerLink: data.trailerLink,
+        thumbnail: data.thumbnail,
+        movieId: data.movieId,        
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+      })
+    })
+    .then(res => this._getResponseData(res))
+  }
 }
 
-export const api = new Api(config);
+export const api = new Api();

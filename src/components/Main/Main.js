@@ -7,10 +7,11 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main() {
+function Main({isMenuOpen,openMenu }) {
+  
   return (
     <>
-    <Header theme={'header_theme-darck'}/>
+    <Header theme={'header_theme-darck'} onClose={openMenu} isOpenMenu ={isMenuOpen} />
       <main className='content'>
         <Promo />
         <AboutProject />

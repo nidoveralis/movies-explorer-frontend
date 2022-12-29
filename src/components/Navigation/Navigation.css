@@ -74,6 +74,7 @@
   right: 24px;
   padding: 0;
   display: none;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 769px){
@@ -150,6 +151,7 @@
     top: -11px;
     right: 8px;
     background-color: #000;
+    cursor: pointer;
   }
 
   .navigation__burger-menu::after {

@@ -17,7 +17,7 @@ class Api {
     return fetch(`${this._baseUrl}/beatfilm-movies`, {
       method: 'GET',
       headers: this._headers,
-      creditals: 'include',
+      //credentials: 'include',
     })
     .then(res=>this._getResponseData(res))
   }

@@ -23,12 +23,14 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isMenuOpen, setMenuOpen] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
+  const [moviesList, setMoviesList] = React.useState([]);
   const [preloader, setPreloader] = React.useState(false);
   const [errServer, setErrServer] = React.useState('');
   const [currentUser,setCurrentUser] = React.useState({});
+  const [isOpen,setIsOpen] = React.useState(false);
+  const [userId,setUserId] = React.useState('');
  // const [formValues, setFormValues] = React.useState({});
-
-  function openMenu() {//открывает, закрывает бургер меню
+  function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
   }
 
@@ -54,22 +56,52 @@ function App() {
         setErrServer('');
         history.push('/movies');
         setIsLoggedIn(true);
-        //return data.token
+        setIsOpen(true)
       }
    })
    .catch(()=>setErrServer('При авторизации пользователя произошла ошибка.'));
+  };
+
+  function onUpdateUser(data) {
+    api.setUserInfo(data)
+    .then(()=>{
+        api.getUserInfo()
+        .then(data=>{
+          setCurrentUser(data)
+        })
+    })
+  }
+
+  function likeCard(movie) {//добавить фильм
+    api.addMovies(movie)
+    .then(()=>{
+      apiMovie.getMovies()
+    .then(res=>{setMovies(res); setPreloader(false)})
+    })
+
   }
 
   React.useEffect(()=> {////загрузает карточки
-    setPreloader(true)
+    setPreloader(true);
+    api.getMovies()
+    .then(res=>{
+      setMovies(res.data)
+      //setMovies(res); 
+      setPreloader(false);
+    })
     apiMovie.getMovies()
-    .then(res=>{setMovies(res); setPreloader(false)})
+    .then(res=>{setMoviesList(res)})//setMoviesList(res)})
   }, [])
 
-  React.useEffect(()=>{
+  
+
+  React.useEffect(()=>{///информация о пользователе
     if(isLoggedIn){
       api.getUserInfo()
-      .then(data=>console.log(data))
+      .then(data=>{
+        setCurrentUser(data);
+        setUserId(data)
+      });
     }
   },[isLoggedIn])
 
@@ -78,7 +110,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
         <Route exact path="/">
-            <Main />
+            <Main closeMenu={closeMenu} isMenuOpen ={isMenuOpen}  />
           </Route>
 
           <Route path="/signin">
@@ -92,10 +124,13 @@ function App() {
           <ProtectedRoute path="/movies" 
                   compoment={Movies}
                   cards = {movies} 
-                  onClose={openMenu} 
-                  isOpenMenu ={isMenuOpen} 
+                  closeMenu = {closeMenu} 
+                  isMenuOpen ={isMenuOpen} 
                   errServer = {errServer} 
-                loggedIn={isLoggedIn}>
+                  loggedIn={isLoggedIn}
+                  likeCard={likeCard}
+                  userId={userId} 
+                  moviesList={moviesList}>
                 </ProtectedRoute>
           
 
@@ -104,7 +139,7 @@ function App() {
           </Route>
 
           <Route path="/profile">
-            <Profile />
+            <Profile onUpdateUser={onUpdateUser} isOpen={isOpen} />
           </Route>
 
           <Route path="*">

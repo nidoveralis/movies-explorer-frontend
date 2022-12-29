@@ -54,16 +54,22 @@
 
 .profile__link {
   color: #000;
+  border: none;
+  background-color: transparent;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.profile__out {
+  color: #FF3055;
   text-decoration: none;
   margin-bottom: 16px;
 }
 
-.profile__link_out {
-  color: #FF3055;
-}
-
 .profile-info__input {
   border: none;
+  background-color: transparent;
+  color: #000;
 }
 
 .profile-info__input:focus {
@@ -87,7 +93,6 @@
   -moz-transition: opacity .5s;
   -ms-transition: opacity .5s;
   -o-transition: opacity .5s;
-  display: none;
 }
 
 .profile__button-submit:hover {

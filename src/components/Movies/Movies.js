@@ -5,13 +5,14 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function Movies({cards, openMenu, isMenuOpen}) {
+function Movies({cards, closeMenu, isMenuOpen, likeCard, userId, moviesList}) {
+  
   return(
     <>
-      <Header onClose={openMenu} isOpenMenu={isMenuOpen}/>
+      <Header onClose={closeMenu} isOpenMenu={isMenuOpen}/>
       <main className="movies">
         <SearchForm />
-        <MoviesCardList movies={cards}/>
+        <MoviesCardList movies={cards} likeCard={likeCard} userId={userId} moviesList={moviesList}/>
       </main>
       <Footer />
     </>
