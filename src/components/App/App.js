@@ -122,16 +122,16 @@ function App() {
           </Route>
 
           <ProtectedRoute path="/movies" 
-                  compoment={Movies}
-                  cards = {movies} 
-                  closeMenu = {closeMenu} 
-                  isMenuOpen ={isMenuOpen} 
-                  errServer = {errServer} 
-                  loggedIn={isLoggedIn}
-                  likeCard={likeCard}
-                  userId={userId} 
-                  moviesList={moviesList}>
-                </ProtectedRoute>
+            compoment={Movies}
+            cards = {movies} 
+            closeMenu = {closeMenu} 
+            isMenuOpen ={isMenuOpen} 
+            errServer = {errServer} 
+            loggedIn={isLoggedIn}
+            likeCard={likeCard}
+            userId={userId} 
+            moviesList={moviesList}>
+          </ProtectedRoute>
           
 
           <Route path="/saved-movies">
