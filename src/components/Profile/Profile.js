@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { api } from '../../utils/MainApi';
 
-function Profile({onUpdateUser, isOpen}) {
+function Profile({onUpdateUser, closeMenu, isMenuOpen, onSingOut, message}) {
   const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -12,34 +12,32 @@ function Profile({onUpdateUser, isOpen}) {
   const [isValidInputs, setIsValidInputs] = React.useState({});
 
   React.useEffect(()=>{
-   // console.log(currentUser)
     setName(currentUser.name);
     setEmail(currentUser.email);
-    console.log(isOpen)
    }, [currentUser])
 
   function chengeButtonState(e) {
     e.preventDefault();
     setButtonState(!buttonState);
-  }
+  };
 
   function handleNameInput(e) {
     setName(e.target.value);
-  }
+  };
 
   function handleEmailInput(e) {
     setEmail(e.target.value);
-  }
+  };
 
   function editUser(e) {
     e.preventDefault();
     onUpdateUser({name, email});
     chengeButtonState(e)
-  }
+  };
 
   return(
     <>
-      <Header />
+      <Header onClose={closeMenu} isOpenMenu={isMenuOpen} />
       <main className='profile'>
       <h2 className='profile__title'>Привет, {name}!</h2>
       <form className='profile-info' onSubmit={editUser}>
@@ -55,7 +53,7 @@ function Profile({onUpdateUser, isOpen}) {
             <p></p>
             {buttonState ? <input type='button' value='Редактировать' className='profile__link'  onClick={chengeButtonState} /> :
             <input type='submit' value='Сохранить' className='profile__button-submit' />}
-            {buttonState &&<a href='/' className='profile__out'>Выйти из аккаунта</a>}
+            {buttonState &&<button className='profile__out' onClick={onSingOut} >Выйти из аккаунта</button>}
         </div>
       </form>
     </main>

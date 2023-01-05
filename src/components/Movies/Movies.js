@@ -8,15 +8,24 @@ import Footer from '../Footer/Footer';
 
 function Movies({cards, closeMenu, isMenuOpen, likeCard, userId, moviesList}) {
   const [searchValue, setSearchValue] = React.useState('');
+  const [cardsList, setCardsList] = React.useState([]);
+
   //поиск по фильмам
-  const foundCards = moviesList.filter(movie=>movie.nameRU.toLowerCase() === searchValue.toLowerCase());////перенести
+  const foundCards = moviesList.filter(movie=>movie.nameRU.toLowerCase() === searchValue || movie.nameEN.toLowerCase() === searchValue);////перенести
+
+  React.useEffect(()=>{
+    setCardsList(foundCards)
+  }, [searchValue])
+
+
+
 
   return(
     <>
       <Header onClose={closeMenu} isOpenMenu={isMenuOpen}/>
       <main className="movies">
         <SearchForm searchValue={setSearchValue}/>
-        <MoviesCardList movies={cards} likeCard={likeCard} userId={userId} moviesList={moviesList} foundCards={foundCards} />
+        <MoviesCardList movies={cards} clickCard={likeCard} userId={userId} moviesList={cardsList}  />
       </main>
       <Footer />
     </>

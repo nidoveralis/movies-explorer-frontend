@@ -11,7 +11,7 @@ import Login from '../Login/Login'
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
 import Preloader from '../Preloader/Preloader';
-import { MoviesSavedList } from '../../utils/moviesList';
+//import { MoviesSavedList } from '../../utils/moviesList';
 import { Route, Switch } from 'react-router-dom';
 import {apiMovie} from '../../utils/MoviesApi';
 import {api} from '../../utils/MainApi';
@@ -29,7 +29,9 @@ function App() {
   const [currentUser,setCurrentUser] = React.useState({});
   const [isOpen,setIsOpen] = React.useState(false);
   const [userId,setUserId] = React.useState('');
- // const [formValues, setFormValues] = React.useState({});
+  const [moviesSavedList,setMoviesSavedList] = React.useState();
+  const [message, setMessage] = React.useState('');
+ 
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
   }
@@ -68,30 +70,43 @@ function App() {
         api.getUserInfo()
         .then(data=>{
           setCurrentUser(data)
+          setMessage(data)
         })
     })
-  }
+    .catch(err=>setMessage(err))
+  };
+
+  function getSavedMovies() {
+    api.getMovies().then(res=>setMoviesSavedList(res))
+  };
 
   function likeCard(movie) {//добавить фильм
     api.addMovies(movie)
     .then(()=>{
-      apiMovie.getMovies()
-    .then(res=>{setMovies(res); setPreloader(false)})
+      getSavedMovies()
+      //apiMovie.getMovies()
+    //.then(res=>{setMovies(res); setPreloader(false)})
     })
 
-  }
+  };
+
+  function removeCard(movie) {
+    api.removeMovie(movie.movieId)
+    .then(()=>getSavedMovies())
+    .catch(err=>console.log(err))
+  };
+
+  function onSingOut() {
+    localStorage.removeItem('jwt');
+    setIsLoggedIn(false);
+  };
 
   React.useEffect(()=> {////загрузает карточки
     setPreloader(true);
-    api.getMovies()
-    .then(res=>{
-      setMovies(res.data)
-      //setMovies(res); 
-      setPreloader(false);
-    })
     apiMovie.getMovies()
     .then(res=>{setMoviesList(res)})//setMoviesList(res)})
-  }, [])
+    getSavedMovies()
+  }, []);
 
   
 
@@ -103,14 +118,14 @@ function App() {
         setUserId(data)
       });
     }
-  },[isLoggedIn])
+  },[isLoggedIn]);
 
   return (
     <div className="app">
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
         <Route exact path="/">
-            <Main closeMenu={closeMenu} isMenuOpen ={isMenuOpen}  />
+            <Main isLoggedIn={isLoggedIn} closeMenu = {closeMenu} isMenuOpen ={isMenuOpen}  />
           </Route>
 
           <Route path="/signin">
@@ -122,6 +137,7 @@ function App() {
           </Route>
 
           <ProtectedRoute path="/movies" 
+            isLoggedIn={isLoggedIn}
             compoment={Movies}
             cards = {movies} 
             closeMenu = {closeMenu} 
@@ -133,14 +149,27 @@ function App() {
             moviesList={moviesList}>
           </ProtectedRoute>
           
+          <ProtectedRoute path="/saved-movies" 
+            isLoggedIn={isLoggedIn}
+            compoment={SavedMovies}
+            cards = {moviesSavedList} 
+            closeMenu = {closeMenu} 
+            isMenuOpen ={isMenuOpen} 
+            errServer = {errServer} 
+            loggedIn={isLoggedIn}
+            removeCard={removeCard}
+            userId={userId} 
+            moviesList={moviesList}>
+          </ProtectedRoute>
 
-          <Route path="/saved-movies">
-            <SavedMovies cards={MoviesSavedList} />
-          </Route>
-
-          <Route path="/profile">
-            <Profile onUpdateUser={onUpdateUser} isOpen={isOpen} />
-          </Route>
+          <ProtectedRoute path="/profile" 
+            isLoggedIn={isLoggedIn}
+            onUpdateUser={onUpdateUser}
+            closeMenu = {closeMenu} 
+            isMenuOpen ={isMenuOpen} 
+            onSingOut={onSingOut} 
+            message={message}>
+          </ProtectedRoute>
 
           <Route path="*">
             <NotFound />

@@ -110,7 +110,17 @@ class Api {
       })
     })
     .then(res => this._getResponseData(res))
+  };
+
+  removeMovie(data) {
+    return fetch(`${this._baseUrl}/movies/${data}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: this._headers,
+    })
+    .then(res => this._getResponseData(res))
   }
-}
+
+};
 
 export const api = new Api();

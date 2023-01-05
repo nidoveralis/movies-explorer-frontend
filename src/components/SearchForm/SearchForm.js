@@ -13,7 +13,7 @@ function SearchForm({searchValue}) {
   };
 
   function changeValue(e) {
-    setInputValue(e.target.value);
+    setInputValue(e.target.value.toLowerCase());
   };
 
   function submitForm(e) {

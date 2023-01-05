@@ -2,8 +2,8 @@ import "./Navigation.css";
 import LogoProfile from '../../images/logo__profile.svg';
 import {Route, Switch, Link} from 'react-router-dom';
 
-function Navigation({isOpenMenu, onClose}) {
-  
+function Navigation({isLoggedIn, isOpenMenu, onClose}) {
+  console.log(isLoggedIn)
   const classNameMenu = `navigation__menu ${isOpenMenu ? "navigation__menu_opened" : ""}`;
   const classNameCloseButton = `navigation__close ${isOpenMenu ? "navigation__close_active" : ""}`;
 
@@ -16,24 +16,10 @@ function Navigation({isOpenMenu, onClose}) {
               <Route path='/signin'>
             </Route>
 
-            <Route path='/movies'>
-              <div className={classNameMenu}>
-                <button  className={classNameCloseButton} onClick={onClose}></button>
-                <div className="navigation__links">
-                  <Link to='/' className="navigation__link link link_hidden">Главная</Link>
-                  <Link to='/movies' className="navigation__link link">Фильмы</Link>
-                  <Link to='/saved-movies' className="navigation__link link">Сохранённые фильмы</Link>
-                </div>
-                <Link to='/profile'  className="link-profile link" >
-                  <img alt='Профиль' src={LogoProfile} className="link-profile__image" />
-                  <p className="link-profile__title">Аккаунт</p>
-                </Link>
-                </div>
-                <span className="navigation__burger-menu" onClick={onClose}></span>
-            </Route>
-
-            <Route path='/saved-movie'>
-              <div className={classNameMenu}>
+           
+            {isLoggedIn ? 
+            <>
+            <div className={classNameMenu}>
                 <button  className={classNameCloseButton} onClick={onClose}></button>
                 <div className="navigation__links">
                   <Link to='/' className="navigation__link link link_hidden">Главная</Link>
@@ -46,30 +32,11 @@ function Navigation({isOpenMenu, onClose}) {
                 </Link>
                 </div>
                 <span className="navigation__burger-menu" onClick={onClose}></span>
-            </Route>
-
-            <Route path='/profile'>
-              <div className={classNameMenu}>
-                <button  className={classNameCloseButton} onClick={onClose}></button>
-                <div className="navigation__links">
-                  <Link to='/' className="navigation__link link link_hidden">Главная</Link>
-                  <Link to='/movies' className="navigation__link link">Фильмы</Link>
-                  <Link to='/saved-movies' className="navigation__link link">Сохранённые фильмы</Link>
-                </div>
-                <Link to='/profile'  className="link-profile link ">
-                  <img alt='Профиль' src={LogoProfile} className="link-profile__image" />
-                  <p className="link-profile__title">Аккаунт</p>
-                </Link>
-                </div>
-                <span className="navigation__burger-menu" onClick={onClose}></span>
-            </Route> 
-
-            <Route path='/'>
-              <div className={`${classNameMenu} 'navigation__menu_main`}>
+            </> :
+            <div className={`${classNameMenu} navigation__menu_main`}>
                 <Link to='/signup' className="navigation__signup link">Регистрация</Link>
                 <Link to='/signin' className="navigation__signin link">Войти</Link>
-              </div>
-            </Route>
+              </div>}
         </Switch>
      
       
@@ -78,3 +45,4 @@ function Navigation({isOpenMenu, onClose}) {
 }
 
 export default Navigation;
+// <div className={`${classNameMenu} 'navigation__menu_main`}>

@@ -8,6 +8,7 @@ function Form({ title, submitButton, linkTitle, link, formValues, errServer, lin
   const [isValidInput, setIsValidInput] = React.useState(false);
   const [isErrorInput, setIsErrorInput] = React.useState({});
   const [formValue,setFormValue] = React.useState({});
+  
   function nameInputValue(e) {
     const input = e.target;
     setIsErrorInput({...isErrorInput, [input.name]:input.validationMessage});

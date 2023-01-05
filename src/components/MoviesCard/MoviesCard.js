@@ -5,8 +5,8 @@ import logoCardSaved from '../../images/logo__saved.svg';
 import logoCardDelete from '../../images/logo__cardDel.svg';
 import config from '../../utils/utils';
 
-function MoviesCard({ cardId, country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN, statusSeved, userId, likeCard }) {
-
+function MoviesCard({ country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN, statusSeved, userId, clickCard }) {
+  
   const location = useLocation();
   const [statusSaved, setStatusSaved] = React.useState(false);
 
@@ -16,10 +16,9 @@ function MoviesCard({ cardId, country, director, duration, year, description, im
   const buttonCardContentRemove = <img className='moviesCard-button__logo-saved' src={logoCardDelete} alt='Удалить фильм' />;
   const time = Math.trunc(duration / 60) ? `${Math.trunc(duration / 60)}ч ${duration % 60}м` : `${duration}м`;
 
-  function clickCard() {
-    console.log(owner)
+  function getCard() {
     setStatusSaved(true)
-    likeCard({ country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN })
+    clickCard({ country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN })
   }
 
   
@@ -27,11 +26,11 @@ function MoviesCard({ cardId, country, director, duration, year, description, im
   return (
     <div className='moviesCard'>
       {location.pathname === '/saved-movies' && (
-        <button className='moviesCard-button moviesCard-button_remove'>{buttonCardContentRemove}
+        <button className='moviesCard-button moviesCard-button_remove' onClick={getCard}>{buttonCardContentRemove}
         </button>
       )}
       {location.pathname === '/movies' && (
-        <button className={buttonCardClass} onClick={clickCard}>{statusSaved ? buttonCardContentSave : buttonCardContentTitle}
+        <button className={buttonCardClass} onClick={getCard}>{statusSaved ? buttonCardContentSave : buttonCardContentTitle}
         </button>
       )}
       <a className='moviesCard-link' href={trailerLink} target='_blank'>
