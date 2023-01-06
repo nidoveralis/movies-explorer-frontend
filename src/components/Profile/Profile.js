@@ -16,6 +16,7 @@ function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, me
   React.useEffect(()=>{
     setName(currentUser.name);
     setEmail(currentUser.email);
+   // console.log(currentUser.email)
    }, [currentUser]);
 
   function chengeButtonState(e) {
@@ -51,14 +52,16 @@ function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, me
           <p className='profile-info__subtitle profile-info__subtitle_bold'>Имя</p>
           <input name='name' type='text' className='profile-info__input profile-info__subtitle' value={name} disabled={buttonState} onChange={handleNameInput}  minLength='2' maxLength='40' required  />
         </fieldset>
+        <span className={`profile__span ${isErrorInput.name ? "profile__span_error" : ""} `}>{isErrorInput.name}</span>
         <fieldset className='profile-info__fieldset'>
           <p className='profile-info__subtitle profile-info__subtitle_bold'>E-mail</p>
           <input name='email' type='text' className='profile-info__input profile-info__subtitle' value={email} disabled={buttonState} onChange={handleEmailInput}  minLength='2' maxLength='40' required />
         </fieldset>
+        <span className={`profile__span ${isErrorInput.name ? "profile__span_error" : ""} `}>{isErrorInput.name}</span>
           <div className='profile__links'>
-            <span className={`element-form__span ${isErrorInput.name && "element-form__span_error"} `}>При обновлении профиля произошла ошибка.</span>
+            <span className={`profile__span ${message.err ? "profile__span_error" : ""} `}>{message.message}</span>
             {buttonState ? <input type='button' value='Редактировать' className='profile__link'  onClick={chengeButtonState} /> :
-            <input type='submit' value='Сохранить' className={buttonClass} onClick={editUser} />}
+            <input type='submit' value='Сохранить' className={buttonClass} onClick={editUser} disabled={!isValidInput} />}
             {buttonState &&<button className='profile__out' onClick={onSingOut} >Выйти из аккаунта</button>}
         </div>
       </form>

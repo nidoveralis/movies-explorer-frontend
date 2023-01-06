@@ -11,7 +11,6 @@ import Login from '../Login/Login'
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
 import Preloader from '../Preloader/Preloader';
-//import { MoviesSavedList } from '../../utils/moviesList';
 import { Route, Switch } from 'react-router-dom';
 import {apiMovie} from '../../utils/MoviesApi';
 import {api} from '../../utils/MainApi';
@@ -22,16 +21,17 @@ function App() {
   const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isMenuOpen, setMenuOpen] = React.useState(false);
- // const [movies, setMovies] = React.useState([]);
   const [moviesList, setMoviesList] = React.useState([]);
   const [preloader, setPreloader] = React.useState(false);
   const [errServer, setErrServer] = React.useState('');
   const [currentUser,setCurrentUser] = React.useState({});
   const [isOpen,setIsOpen] = React.useState(false);
   const [userId,setUserId] = React.useState('');
-  const [moviesSavedList,setMoviesSavedList] = React.useState();
-  const [message, setMessage] = React.useState('');
- 
+  const [moviesSavedList,setMoviesSavedList] = React.useState([]);
+  const [message, setMessage] = React.useState({});
+  const [searchAllMovies, setSearchAllMovies] = React.useState([]);
+  const [searchSavedMovies, setSearchSavedMovies] = React.useState([]);
+
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
   };
@@ -63,50 +63,72 @@ function App() {
    })
    .catch(()=>setErrServer('При авторизации пользователя произошла ошибка.'));
   };
-
-  function onUpdateUser(data) {
-    api.setUserInfo(data)
-    .then(()=>{
-        api.getUserInfo()
-        .then(data=>{console.log(data)
-          setCurrentUser(data)
-          setMessage(data)
-        })
-    })
-    .catch(err=>setMessage(err))
-  };
-
-  function getSavedMovies() {
-    api.getMovies().then(res=>setMoviesSavedList(res))
-  };
-
-  function likeCard(movie) {//добавить фильм
-    api.addMovies(movie)
-    .then(()=>{
-      getSavedMovies()
-      //apiMovie.getMovies()
-    //.then(res=>{setMovies(res); setPreloader(false)})
-    })
-
-  };
-
-  function removeCard(movie) {
-    api.removeMovie(movie.movieId)
-    .then(()=>getSavedMovies())
-    .catch(err=>console.log(err))
-  };
-
+  
   function onSingOut() {
     localStorage.removeItem('jwt');
     setIsLoggedIn(false);
   };
 
+  function onUpdateUser(data) {
+    setPreloader(true);
+    api.setUserInfo(data)
+    .then((data)=>{
+      setPreloader(false);
+      if(data.message) {
+        setMessage({message: data.message, err: true});
+      }else {
+        setMessage({message:'Профиль успешно обновлён', err: false});
+        api.getUserInfo()
+        .then(data=>{
+          setCurrentUser(data)})
+      }
+    })
+    .catch((e)=>{console.log(e)})
+  };
+
+  function getSavedMovies() {
+    api.getMovies().then(res=>setMoviesSavedList(res.data))
+  };
+
+  function likeCard(movie) {//добавить фильм
+    setPreloader(true);
+    api.addMovies(movie)
+    .then(()=>{
+      getSavedMovies();
+     setPreloader(false);
+    })
+
+  };
+
+  function removeCard(movie) {
+    setPreloader(true);
+    api.removeMovie(movie.movieId)
+    .then(()=>{
+      getSavedMovies();
+      setPreloader(false);
+    })
+    .catch(err=>console.log(err))
+  };
+  
+  function searchMovie(data) {
+    const foundCards = moviesList.filter(movie=>movie.nameRU.toLowerCase() === data || movie.nameEN.toLowerCase() === data);
+    setSearchAllMovies(foundCards);
+  };
+
+  function searchUserMovie(data) {
+    const foundCards = moviesSavedList.filter(movie=>movie.nameRU.toLowerCase() === data || movie.nameEN.toLowerCase() === data);
+    setSearchSavedMovies(foundCards);
+  };
+
   React.useEffect(()=> {////загрузает карточки
     setPreloader(true);
     apiMovie.getMovies()
-    .then(res=>{setMoviesList(res)})//setMoviesList(res)})
-    getSavedMovies()
-  }, []);
+    .then(res=>{
+      setMoviesList(res);
+      setPreloader(false);
+      })
+    getSavedMovies();
+  }, [isLoggedIn]);
 
   
 
@@ -122,6 +144,7 @@ function App() {
 
   return (
     <div className="app">
+      <Preloader preloader={preloader} />
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
         <Route exact path="/">
@@ -135,7 +158,7 @@ function App() {
           <Route path="/signup">
             <Register formValues={onRegister} errServer={errServer}/>
           </Route>
-
+          
           <ProtectedRoute path="/movies" 
             isLoggedIn={isLoggedIn}
             compoment={Movies}
@@ -145,7 +168,8 @@ function App() {
             loggedIn={isLoggedIn}
             likeCard={likeCard}
             userId={userId} 
-            moviesList={moviesList}>
+            searchAllMovies={searchAllMovies}
+            searchMovie={searchMovie}>
           </ProtectedRoute>
           
           <ProtectedRoute path="/saved-movies" 
@@ -158,7 +182,8 @@ function App() {
             loggedIn={isLoggedIn}
             removeCard={removeCard}
             userId={userId} 
-            moviesList={moviesList}>
+            searchSavedMovies={searchSavedMovies}
+            searchMovie={searchUserMovie}>
           </ProtectedRoute>
 
           <ProtectedRoute path="/profile" 

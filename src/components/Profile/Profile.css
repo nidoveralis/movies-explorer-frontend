@@ -58,6 +58,7 @@
   background-color: transparent;
   margin-bottom: 16px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .profile__out {
@@ -107,15 +108,15 @@
   cursor: auto;
 }
 
-.element-form__span {
-  opacity: 0;
+.profile__span {
+  font-size: 10px;
+  line-height: 12px;
 }
 
-.element-form__span_error {
+.profile__span_error {
   color: #FF3055;
   font-size: 10px;
   line-height: 12px;
-  opacity: 1;
 }
 
 @media screen and (min-width: 865px) {
