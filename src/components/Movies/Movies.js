@@ -6,7 +6,8 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function Movies({cards, closeMenu, isMenuOpen, likeCard, userId, moviesList}) {
+function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, userId, moviesList}) {
+  
   const [searchValue, setSearchValue] = React.useState('');
   const [cardsList, setCardsList] = React.useState([]);
 
@@ -22,7 +23,7 @@ function Movies({cards, closeMenu, isMenuOpen, likeCard, userId, moviesList}) {
 
   return(
     <>
-      <Header onClose={closeMenu} isOpenMenu={isMenuOpen}/>
+      <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen}/>
       <main className="movies">
         <SearchForm searchValue={setSearchValue}/>
         <MoviesCardList movies={cards} clickCard={likeCard} userId={userId} moviesList={cardsList}  />

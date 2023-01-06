@@ -64,6 +64,8 @@
   color: #FF3055;
   text-decoration: none;
   margin-bottom: 16px;
+  border: none;
+  background-color: transparent;
 }
 
 .profile-info__input {
@@ -97,6 +99,23 @@
 
 .profile__button-submit:hover {
   opacity: .8;
+}
+
+.element-form__button-submit_error {
+  background-color: #F8F8F8;
+  color: #C2C2C2;
+  cursor: auto;
+}
+
+.element-form__span {
+  opacity: 0;
+}
+
+.element-form__span_error {
+  color: #FF3055;
+  font-size: 10px;
+  line-height: 12px;
+  opacity: 1;
 }
 
 @media screen and (min-width: 865px) {

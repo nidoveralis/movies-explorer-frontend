@@ -1,4 +1,7 @@
-const [isValidInput, setIsValidInput] = React.useState(false);
+import React from "react";
+
+function ValidationForm({formValues}) {
+  const [isValidInput, setIsValidInput] = React.useState(false);
   const [isErrorInput, setIsErrorInput] = React.useState({});
   const [formValue,setFormValue] = React.useState({});
   
@@ -15,3 +18,4 @@ const [isValidInput, setIsValidInput] = React.useState(false);
     e.preventDefault();
     formValues(formValue)
   }
+}

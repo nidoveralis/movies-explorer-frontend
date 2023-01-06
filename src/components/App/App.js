@@ -22,7 +22,7 @@ function App() {
   const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isMenuOpen, setMenuOpen] = React.useState(false);
-  const [movies, setMovies] = React.useState([]);
+ // const [movies, setMovies] = React.useState([]);
   const [moviesList, setMoviesList] = React.useState([]);
   const [preloader, setPreloader] = React.useState(false);
   const [errServer, setErrServer] = React.useState('');
@@ -34,7 +34,7 @@ function App() {
  
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
-  }
+  };
 
   function onRegister(data) {///регистрация qq@mail.ry
     api.signUp(data)
@@ -47,18 +47,18 @@ function App() {
      }
    })
    .catch(()=>setErrServer('При регистрации пользователя произошла ошибка.'));
-  }
+  };
 
-  function onLogin(data) {///вход ee@mail.ru 111
+  function onLogin(data) {///вход cc@mail.ru cc
     api.signIn(data)
     .then(data=>{
       if(!data.token){
         setErrServer(data.message);
-      } else {
+      }else {
         setErrServer('');
         history.push('/movies');
         setIsLoggedIn(true);
-        setIsOpen(true)
+        setIsOpen(true);
       }
    })
    .catch(()=>setErrServer('При авторизации пользователя произошла ошибка.'));
@@ -68,7 +68,7 @@ function App() {
     api.setUserInfo(data)
     .then(()=>{
         api.getUserInfo()
-        .then(data=>{
+        .then(data=>{console.log(data)
           setCurrentUser(data)
           setMessage(data)
         })
@@ -139,7 +139,6 @@ function App() {
           <ProtectedRoute path="/movies" 
             isLoggedIn={isLoggedIn}
             compoment={Movies}
-            cards = {movies} 
             closeMenu = {closeMenu} 
             isMenuOpen ={isMenuOpen} 
             errServer = {errServer} 
@@ -164,9 +163,12 @@ function App() {
 
           <ProtectedRoute path="/profile" 
             isLoggedIn={isLoggedIn}
+            compoment={Profile}
             onUpdateUser={onUpdateUser}
             closeMenu = {closeMenu} 
             isMenuOpen ={isMenuOpen} 
+            errServer = {errServer} 
+            loggedIn={isLoggedIn}
             onSingOut={onSingOut} 
             message={message}>
           </ProtectedRoute>
@@ -181,7 +183,3 @@ function App() {
 }
 
 export default App;
-//<Route path="/movies">
-//<Preloader preloader={preloader} />
-//<Movies cards={movies} onClose={openMenu} isOpenMenu={isMenuOpen} errServer={errServer} />
-//</Route>

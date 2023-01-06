@@ -5,7 +5,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 function MoviesCardList({clickCard, userId, moviesList}) {
-  console.log(moviesList)
+
   const location = useLocation();
     const [resultCardsList, setResultCardsList] = React.useState([]);
     const [windowSize, setWindowSize] = React.useState(window.innerWidth);

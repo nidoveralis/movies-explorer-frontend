@@ -6,7 +6,8 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import Footer from '../Footer/Footer';
 
-function SavedMovies({cards, closeMenu, isMenuOpen, removeCard, userId, moviesList}) {
+function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, userId, moviesList}) {
+  
   const [searchValue, setSearchValue] = React.useState('');
   const [cardsList, setCardsList] = React.useState([]);
 
@@ -24,7 +25,7 @@ function SavedMovies({cards, closeMenu, isMenuOpen, removeCard, userId, moviesLi
 
   return(
     <>
-      <Header onClose={closeMenu} isOpenMenu={isMenuOpen} />
+      <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen} />
       <main className="savedMovies">
         <SearchForm searchValue={setSearchValue} />
         <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={cardsList} />
