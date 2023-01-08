@@ -3,16 +3,18 @@ import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, userId, searchAllMovies, searchMovie}) {
+function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader}) {
 
   return(
     <>
       <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen}/>
       <main className="movies">
-        <SearchForm searchMovie={searchMovie}/>
-        <MoviesCardList movies={cards} clickCard={likeCard} userId={userId} moviesList={searchAllMovies}  />
+        <SearchForm searchMovie={searchMovie} handleSliderClick={handleSliderClick} sliderStatus={sliderStatus} />
+        <Preloader preloader={preloader} />
+        <MoviesCardList movies={cards} clickCard={likeCard} userId={userId} moviesList={searchAllMovies} messageForMoviesList={messageForMoviesList} />
       </main>
       <Footer />
     </>

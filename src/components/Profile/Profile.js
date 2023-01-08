@@ -16,7 +16,6 @@ function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, me
   React.useEffect(()=>{
     setName(currentUser.name);
     setEmail(currentUser.email);
-   // console.log(currentUser.email)
    }, [currentUser]);
 
   function chengeButtonState(e) {

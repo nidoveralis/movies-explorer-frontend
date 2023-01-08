@@ -10,7 +10,6 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login'
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
-import Preloader from '../Preloader/Preloader';
 import { Route, Switch } from 'react-router-dom';
 import {apiMovie} from '../../utils/MoviesApi';
 import {api} from '../../utils/MainApi';
@@ -22,7 +21,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isMenuOpen, setMenuOpen] = React.useState(false);
   const [moviesList, setMoviesList] = React.useState([]);
-  const [preloader, setPreloader] = React.useState(false);
   const [errServer, setErrServer] = React.useState('');
   const [currentUser,setCurrentUser] = React.useState({});
   const [isOpen,setIsOpen] = React.useState(false);
@@ -31,6 +29,9 @@ function App() {
   const [message, setMessage] = React.useState({});
   const [searchAllMovies, setSearchAllMovies] = React.useState([]);
   const [searchSavedMovies, setSearchSavedMovies] = React.useState([]);
+  const [preloader,setPreloader] = React.useState(false);
+  const [messageForMoviesList, setMessageForMoviesList] = React.useState('');
+  const [sliderStatus, setSliderStatus] = React.useState(Boolean);
 
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
@@ -57,6 +58,7 @@ function App() {
       }else {
         setErrServer('');
         history.push('/movies');
+        handleSliderStatus();
         setIsLoggedIn(true);
         setIsOpen(true);
       }
@@ -95,7 +97,7 @@ function App() {
     api.addMovies(movie)
     .then(()=>{
       getSavedMovies();
-     setPreloader(false);
+      setPreloader(false);
     })
 
   };
@@ -109,28 +111,71 @@ function App() {
     })
     .catch(err=>console.log(err))
   };
-  
-  function searchMovie(data) {
-    const foundCards = moviesList.filter(movie=>movie.nameRU.toLowerCase() === data || movie.nameEN.toLowerCase() === data);
-    setSearchAllMovies(foundCards);
+
+  function handleSliderStatus() {
+    if(!localStorage.getItem('slider')) {
+      localStorage.setItem('slider', true);
+      setSliderStatus(true);
+    }else {
+      localStorage.getItem('slider');
+    }
   };
 
-  function searchUserMovie(data) {
-    const foundCards = moviesSavedList.filter(movie=>movie.nameRU.toLowerCase() === data || movie.nameEN.toLowerCase() === data);
-    setSearchSavedMovies(foundCards);
+  function handleSliderClick() {
+    setSliderStatus(!sliderStatus);
+    console.log('aaa')
+    localStorage.setItem('slider', sliderStatus);
+  };
+
+  function searchMovie(data) {//поиск фильмов
+    const result = searchMovies(data, moviesList);
+    setSearchAllMovies(result ? result : []);
+  };
+
+  function searchUserMovie(data) {//поиск сохранённых фильмов
+    const resultUserMovie = searchMovies(data, moviesSavedList);
+    setSearchSavedMovies(resultUserMovie ? resultUserMovie : []);
+  };
+
+ ///boiler room – stay in russia
+ function searchShortMovie(data) {//поиск коротких фильмов
+  if(sliderStatus) {
+    const shortMovieList = data.filter(movie=>movie.duration<=40 && sliderStatus);
+    if(shortMovieList.length===0) {
+      setMessageForMoviesList('Ничего не найдено');
+    } else {
+      setMessageForMoviesList('');
+      return shortMovieList
+    }
+  } else {
+    return data;
+  };
+  };
+ 
+  function searchMovies(data, list) {//фильтр
+    setPreloader(true);
+    if(data === '') {
+      setPreloader(false);
+      setMessageForMoviesList('Нужно ввести ключевое слово');
+    }else {
+      const foundCards = list.filter(movie=>movie.nameRU.toLowerCase() === data || movie.nameEN.toLowerCase() === data);
+    if(foundCards.length===0) {
+      setMessageForMoviesList('Ничего не найдено');
+      setPreloader(false);
+    }else {
+      setMessageForMoviesList('');
+      setPreloader(false);
+      return searchShortMovie(foundCards)
+    }}
   };
 
   React.useEffect(()=> {////загрузает карточки
-    setPreloader(true);
     apiMovie.getMovies()
     .then(res=>{
       setMoviesList(res);
-      setPreloader(false);
       })
     getSavedMovies();
-  }, [isLoggedIn]);
-
-  
+  }, [isLoggedIn]);  
 
   React.useEffect(()=>{///информация о пользователе
     if(isLoggedIn){
@@ -144,7 +189,6 @@ function App() {
 
   return (
     <div className="app">
-      <Preloader preloader={preloader} />
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
         <Route exact path="/">
@@ -169,7 +213,11 @@ function App() {
             likeCard={likeCard}
             userId={userId} 
             searchAllMovies={searchAllMovies}
-            searchMovie={searchMovie}>
+            searchMovie={searchMovie}
+            messageForMoviesList={messageForMoviesList}
+            handleSliderClick={handleSliderClick}
+            sliderStatus={sliderStatus}
+            preloader={preloader} >
           </ProtectedRoute>
           
           <ProtectedRoute path="/saved-movies" 
@@ -183,7 +231,9 @@ function App() {
             removeCard={removeCard}
             userId={userId} 
             searchSavedMovies={searchSavedMovies}
-            searchMovie={searchUserMovie}>
+            searchMovie={searchUserMovie}
+            messageForMoviesList={messageForMoviesList}
+            preloader={preloader}>
           </ProtectedRoute>
 
           <ProtectedRoute path="/profile" 

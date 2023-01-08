@@ -4,9 +4,9 @@ import config from '../../utils/utils';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-function MoviesCardList({clickCard, userId, moviesList}) {
+function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
 
-  const location = useLocation();
+    const location = useLocation();
     const [resultCardsList, setResultCardsList] = React.useState([]);
     const [windowSize, setWindowSize] = React.useState(window.innerWidth);
     const [cardListSize, setCardListSize] = React.useState();
@@ -63,8 +63,7 @@ function MoviesCardList({clickCard, userId, moviesList}) {
   return(
     <section className="moviesCardList">
       <div className="moviesCardList__content">
-      {location.pathname === '/movies' && (
-          resultCardsList.length === 0 ? <p className='result-none'>Ничего не найдено</p> :
+      {location.pathname === '/movies' && ( messageForMoviesList ? <p className='result-none'>{messageForMoviesList}</p> :
           resultCardsList.map(card=>(
              <MoviesCard 
              key={card.id} 
@@ -84,7 +83,7 @@ function MoviesCardList({clickCard, userId, moviesList}) {
             clickCard={clickCard}  />
            )) 
       )}
-        {location.pathname === '/saved-movies' && ( resultCardsList.length === 0 ? <p className='result-none'>Ничего не найдено</p> :
+        {location.pathname === '/saved-movies' && ( messageForMoviesList ? <p className='result-none'>{messageForMoviesList}</p> :
           resultCardsList.map(card=>(
              <MoviesCard 
              key={card._id}  
