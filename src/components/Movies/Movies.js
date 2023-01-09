@@ -6,13 +6,18 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader}) {
+function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader }) {
+
+  function saveSearchedMovie(data) {
+    console.log('lllll')
+    localStorage.setItem('searchMovie', JSON.stringify(data));
+  };
 
   return(
     <>
       <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen}/>
       <main className="movies">
-        <SearchForm searchMovie={searchMovie} handleSliderClick={handleSliderClick} sliderStatus={sliderStatus} />
+        <SearchForm searchMovie={searchMovie} handleSliderClick={handleSliderClick} sliderStatus={sliderStatus} saveSearchedMovie={saveSearchedMovie}/>
         <Preloader preloader={preloader} />
         <MoviesCardList movies={cards} clickCard={likeCard} userId={userId} moviesList={searchAllMovies} messageForMoviesList={messageForMoviesList} />
       </main>

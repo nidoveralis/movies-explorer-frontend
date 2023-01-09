@@ -27,13 +27,13 @@ function App() {
   const [userId,setUserId] = React.useState('');
   const [moviesSavedList,setMoviesSavedList] = React.useState([]);
   const [message, setMessage] = React.useState({});
-  const [searchValue, setSearchValue] = React.useState(String);
+  const [searchValue, setSearchValue] = React.useState('');
   const [searchSavedValue, setSearchSavedValue] = React.useState('');
   const [searchAllMovies, setSearchAllMovies] = React.useState([]);
   const [searchSavedMovies, setSearchSavedMovies] = React.useState([]);
   const [preloader,setPreloader] = React.useState(false);
   const [messageForMoviesList, setMessageForMoviesList] = React.useState('');
-  const [sliderStatus, setSliderStatus] = React.useState(Boolean);
+  const [sliderStatus, setSliderStatus] = React.useState();
 
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
@@ -130,7 +130,7 @@ function App() {
 
   function searchMovie(data) {//поиск фильмов
     setSearchValue(data);
-    localStorage.setItem('searchMovie', searchValue);
+    //localStorage.setItem('searchMovie', JSON.stringify(searchValue));
     const result = searchMovies(data, moviesList);
     setSearchAllMovies(result ? result : []);
   };
@@ -192,8 +192,8 @@ function App() {
   },[isLoggedIn]);
   
   React.useEffect(()=>{
-    localStorage.getItem('searchMovie') ?  setSearchValue(localStorage.getItem('searchMovie')) : setSearchValue('');
-    localStorage.getItem('searchSavedMovie') ?  setSearchSavedValue(localStorage.getItem('searchSavedMovie')) : setSearchSavedValue('');
+   // localStorage.getItem('searchMovie') ?  setSearchValue(localStorage.getItem('searchMovie')) : setSearchValue('');
+    //localStorage.getItem('searchSavedMovie') ?  setSearchSavedValue(localStorage.getItem('searchSavedMovie')) : setSearchSavedValue('');
     searchMovie(searchValue);
     searchUserMovie(searchSavedValue);
   },[searchValue, searchSavedValue]);
@@ -244,6 +244,8 @@ function App() {
             searchSavedMovies={searchSavedMovies}
             searchMovie={searchUserMovie}
             messageForMoviesList={messageForMoviesList}
+            handleSliderClick={handleSliderClick}
+            sliderStatus={sliderStatus}
             preloader={preloader}>
           </ProtectedRoute>
 
