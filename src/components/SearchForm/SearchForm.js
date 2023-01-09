@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './SearchForm.css';
 import LogeSearch from '../../images/iconlogo__search.svg';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm({searchMovie, handleSliderClick, sliderStatus}) {
 
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState();
 
   function changeValue(e) {
     setInputValue(e.target.value);

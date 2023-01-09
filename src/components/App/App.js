@@ -27,6 +27,8 @@ function App() {
   const [userId,setUserId] = React.useState('');
   const [moviesSavedList,setMoviesSavedList] = React.useState([]);
   const [message, setMessage] = React.useState({});
+  const [searchValue, setSearchValue] = React.useState(String);
+  const [searchSavedValue, setSearchSavedValue] = React.useState('');
   const [searchAllMovies, setSearchAllMovies] = React.useState([]);
   const [searchSavedMovies, setSearchSavedMovies] = React.useState([]);
   const [preloader,setPreloader] = React.useState(false);
@@ -112,27 +114,30 @@ function App() {
     .catch(err=>console.log(err))
   };
 
-  function handleSliderStatus() {
+  function handleSliderStatus() {//загрузка слайдера
     if(!localStorage.getItem('slider')) {
       localStorage.setItem('slider', true);
       setSliderStatus(true);
     }else {
-      localStorage.getItem('slider');
+      setSliderStatus(localStorage.getItem('slider'));
     }
   };
 
   function handleSliderClick() {
     setSliderStatus(!sliderStatus);
-    console.log('aaa')
-    localStorage.setItem('slider', sliderStatus);
+    localStorage.setItem('slider', !sliderStatus);
   };
 
   function searchMovie(data) {//поиск фильмов
+    setSearchValue(data);
+    localStorage.setItem('searchMovie', searchValue);
     const result = searchMovies(data, moviesList);
     setSearchAllMovies(result ? result : []);
   };
 
   function searchUserMovie(data) {//поиск сохранённых фильмов
+    setSearchSavedValue(data);
+    localStorage.setItem('searchSavedMovie', searchSavedValue);
     const resultUserMovie = searchMovies(data, moviesSavedList);
     setSearchSavedMovies(resultUserMovie ? resultUserMovie : []);
   };
@@ -149,8 +154,7 @@ function App() {
     }
   } else {
     return data;
-  };
-  };
+  }};
  
   function searchMovies(data, list) {//фильтр
     setPreloader(true);
@@ -186,6 +190,13 @@ function App() {
       });
     }
   },[isLoggedIn]);
+  
+  React.useEffect(()=>{
+    localStorage.getItem('searchMovie') ?  setSearchValue(localStorage.getItem('searchMovie')) : setSearchValue('');
+    localStorage.getItem('searchSavedMovie') ?  setSearchSavedValue(localStorage.getItem('searchSavedMovie')) : setSearchSavedValue('');
+    searchMovie(searchValue);
+    searchUserMovie(searchSavedValue);
+  },[searchValue, searchSavedValue]);
 
   return (
     <div className="app">
