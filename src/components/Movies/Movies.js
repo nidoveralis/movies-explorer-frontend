@@ -9,7 +9,6 @@ import Footer from '../Footer/Footer';
 function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader }) {
 
   function saveSearchedMovie(data) {
-    console.log('lllll')
     localStorage.setItem('searchMovie', JSON.stringify(data));
   };
 

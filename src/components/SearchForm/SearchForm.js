@@ -14,7 +14,7 @@ function SearchForm({searchMovie, handleSliderClick, sliderStatus, saveSearchedM
   function submitForm(e) {
     e.preventDefault();
     searchMovie(inputValue);
-    saveSearchedMovie(inputValue)
+    //saveSearchedMovie(inputValue)
   };
 
   return(

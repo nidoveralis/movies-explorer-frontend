@@ -34,7 +34,7 @@ function App() {
   const [preloader,setPreloader] = React.useState(false);
   const [messageForMoviesList, setMessageForMoviesList] = React.useState('');
   const [sliderStatus, setSliderStatus] = React.useState();
-
+const r =localStorage.getItem('slider')
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
   };
@@ -113,31 +113,39 @@ function App() {
     })
     .catch(err=>console.log(err))
   };
-
+  //const slid = JSON.parse(localStorage.getItem('slider'))
   function handleSliderStatus() {//загрузка слайдера
-    if(!localStorage.getItem('slider')) {
-      localStorage.setItem('slider', true);
+    if(JSON.parse(localStorage.getItem('slider'))===null) {
+      localStorage.setItem('slider', JSON.stringify(true));
       setSliderStatus(true);
     }else {
-      setSliderStatus(localStorage.getItem('slider'));
+      setSliderStatus(JSON.parse(localStorage.getItem('slider')));
     }
   };
 
+  function a() {//загрузка из localStorage
+   const aSave = localStorage.getItem('searchSavedMovie');
+   const aAAll = localStorage.getItem('searchMovie');
+   console.log(aSave, aAAll);
+
+  }
+
   function handleSliderClick() {
+    console.log('k',sliderStatus,r)
     setSliderStatus(!sliderStatus);
-    localStorage.setItem('slider', !sliderStatus);
+    localStorage.setItem('slider', JSON.stringify(!sliderStatus));
   };
 
   function searchMovie(data) {//поиск фильмов
     setSearchValue(data);
-    //localStorage.setItem('searchMovie', JSON.stringify(searchValue));
+    localStorage.setItem('searchMovie', JSON.stringify(searchValue));
     const result = searchMovies(data, moviesList);
     setSearchAllMovies(result ? result : []);
   };
 
   function searchUserMovie(data) {//поиск сохранённых фильмов
     setSearchSavedValue(data);
-    localStorage.setItem('searchSavedMovie', searchSavedValue);
+    //localStorage.setItem('searchSavedMovie', JSON.stringify(searchSavedValue));
     const resultUserMovie = searchMovies(data, moviesSavedList);
     setSearchSavedMovies(resultUserMovie ? resultUserMovie : []);
   };
@@ -188,10 +196,12 @@ function App() {
         setCurrentUser(data);
         setUserId(data)
       });
+      //handleSliderStatus();
     }
   },[isLoggedIn]);
   
   React.useEffect(()=>{
+    //console.log(searchSavedValue)
    // localStorage.getItem('searchMovie') ?  setSearchValue(localStorage.getItem('searchMovie')) : setSearchValue('');
     //localStorage.getItem('searchSavedMovie') ?  setSearchSavedValue(localStorage.getItem('searchSavedMovie')) : setSearchSavedValue('');
     searchMovie(searchValue);
