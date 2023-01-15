@@ -70,6 +70,3 @@ function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, me
 }
 
 export default Profile;
-//<a href='/#' className='profile__link'>Редактировать</a>
-//<button className='profile__link' >Редактировать</button>
-//<input type='submit' value='Сохранить' className='profile__button-submit' />

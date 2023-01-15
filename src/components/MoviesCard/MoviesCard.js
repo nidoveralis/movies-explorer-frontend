@@ -43,4 +43,3 @@ function MoviesCard({ country, director, duration, year, description, image, tra
 }
 
 export default MoviesCard;
-//<img className='moviesCard__img' src={`${config.baseUrl+poster}`} alt={name}/>

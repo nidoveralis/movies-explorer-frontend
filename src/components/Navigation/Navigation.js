@@ -33,8 +33,6 @@ function Navigation({isLoggedIn, isOpenMenu, onClose}) {
                 <Link to='/signin' className="navigation__signin link">Войти</Link>
               </div></>}
         </Switch>
-     
-      
     </section>
   );
 }
