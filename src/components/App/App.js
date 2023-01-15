@@ -27,14 +27,12 @@ function App() {
   const [userId,setUserId] = React.useState('');
   const [moviesSavedList,setMoviesSavedList] = React.useState([]);
   const [message, setMessage] = React.useState({});
-  const [searchValue, setSearchValue] = React.useState('');
-  const [searchSavedValue, setSearchSavedValue] = React.useState('');
   const [searchAllMovies, setSearchAllMovies] = React.useState([]);
   const [searchSavedMovies, setSearchSavedMovies] = React.useState([]);
   const [preloader,setPreloader] = React.useState(false);
   const [messageForMoviesList, setMessageForMoviesList] = React.useState('');
   const [sliderStatus, setSliderStatus] = React.useState();
-const r =localStorage.getItem('slider')
+
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
   };
@@ -113,7 +111,7 @@ const r =localStorage.getItem('slider')
     })
     .catch(err=>console.log(err))
   };
-  //const slid = JSON.parse(localStorage.getItem('slider'))
+ 
   function handleSliderStatus() {//загрузка слайдера
     if(JSON.parse(localStorage.getItem('slider'))===null) {
       localStorage.setItem('slider', JSON.stringify(true));
@@ -123,34 +121,11 @@ const r =localStorage.getItem('slider')
     }
   };
 
-  function a() {//загрузка из localStorage
-   const aSave = localStorage.getItem('searchSavedMovie');
-   const aAAll = localStorage.getItem('searchMovie');
-   console.log(aSave, aAAll);
-
-  }
-
   function handleSliderClick() {
-    console.log('k',sliderStatus,r)
     setSliderStatus(!sliderStatus);
     localStorage.setItem('slider', JSON.stringify(!sliderStatus));
   };
 
-  function searchMovie(data) {//поиск фильмов
-    setSearchValue(data);
-    localStorage.setItem('searchMovie', JSON.stringify(searchValue));
-    const result = searchMovies(data, moviesList);
-    setSearchAllMovies(result ? result : []);
-  };
-
-  function searchUserMovie(data) {//поиск сохранённых фильмов
-    setSearchSavedValue(data);
-    //localStorage.setItem('searchSavedMovie', JSON.stringify(searchSavedValue));
-    const resultUserMovie = searchMovies(data, moviesSavedList);
-    setSearchSavedMovies(resultUserMovie ? resultUserMovie : []);
-  };
-
- ///boiler room – stay in russia
  function searchShortMovie(data) {//поиск коротких фильмов
   if(sliderStatus) {
     const shortMovieList = data.filter(movie=>movie.duration<=40 && sliderStatus);
@@ -158,27 +133,37 @@ const r =localStorage.getItem('slider')
       setMessageForMoviesList('Ничего не найдено');
     } else {
       setMessageForMoviesList('');
-      return shortMovieList
+      return shortMovieList;
     }
   } else {
     return data;
   }};
  
-  function searchMovies(data, list) {//фильтр
+  function filterMovies(data, list) {//фильтр
     setPreloader(true);
     if(data === '') {
       setPreloader(false);
       setMessageForMoviesList('Нужно ввести ключевое слово');
-    }else {
+    }else if(data !== '') {
       const foundCards = list.filter(movie=>movie.nameRU.toLowerCase() === data || movie.nameEN.toLowerCase() === data);
-    if(foundCards.length===0) {
-      setMessageForMoviesList('Ничего не найдено');
-      setPreloader(false);
-    }else {
-      setMessageForMoviesList('');
-      setPreloader(false);
-      return searchShortMovie(foundCards)
-    }}
+      if(foundCards.length===0) {
+        setMessageForMoviesList('Ничего не найдено');
+        setPreloader(false);
+      }else {
+        setMessageForMoviesList('');
+        setPreloader(false);
+        return searchShortMovie(foundCards);
+      }}
+  };
+
+  function searchMovie(data) {//поиск фильмов
+    const result = filterMovies(data, moviesList);
+    setSearchAllMovies(result ? result : []);
+  };
+
+  function searchUserMovie(data) {//поиск сохранённых фильмов
+    const resultUserMovie = filterMovies(data, moviesSavedList);
+    setSearchSavedMovies(resultUserMovie ? resultUserMovie : []);
   };
 
   React.useEffect(()=> {////загрузает карточки
@@ -196,17 +181,8 @@ const r =localStorage.getItem('slider')
         setCurrentUser(data);
         setUserId(data)
       });
-      //handleSliderStatus();
     }
   },[isLoggedIn]);
-  
-  React.useEffect(()=>{
-    //console.log(searchSavedValue)
-   // localStorage.getItem('searchMovie') ?  setSearchValue(localStorage.getItem('searchMovie')) : setSearchValue('');
-    //localStorage.getItem('searchSavedMovie') ?  setSearchSavedValue(localStorage.getItem('searchSavedMovie')) : setSearchSavedValue('');
-    searchMovie(searchValue);
-    searchUserMovie(searchSavedValue);
-  },[searchValue, searchSavedValue]);
 
   return (
     <div className="app">
@@ -238,7 +214,7 @@ const r =localStorage.getItem('slider')
             messageForMoviesList={messageForMoviesList}
             handleSliderClick={handleSliderClick}
             sliderStatus={sliderStatus}
-            preloader={preloader} >
+            preloader={preloader}>
           </ProtectedRoute>
           
           <ProtectedRoute path="/saved-movies" 
@@ -251,7 +227,7 @@ const r =localStorage.getItem('slider')
             loggedIn={isLoggedIn}
             removeCard={removeCard}
             userId={userId} 
-            searchSavedMovies={searchSavedMovies}
+            searchAllMovies={searchSavedMovies}
             searchMovie={searchUserMovie}
             messageForMoviesList={messageForMoviesList}
             handleSliderClick={handleSliderClick}

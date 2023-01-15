@@ -19,7 +19,7 @@ function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
     };
 
     React.useEffect(()=>{
-      setResultCardsList(moviesList)
+      setResultCardsList(moviesList);
     }, [moviesList]);
 
 
@@ -63,7 +63,7 @@ function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
   return(
     <section className="moviesCardList">
       <div className="moviesCardList__content">
-      {location.pathname === '/movies' && ( messageForMoviesList ? <p className='result-none'>{messageForMoviesList}</p> :
+      {location.pathname === '/movies' && ( resultCardsList.length ===0 ? <p className='result-none'>{messageForMoviesList}</p> :
           resultCardsList.map(card=>(
              <MoviesCard 
              key={card.id} 
@@ -83,7 +83,7 @@ function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
             clickCard={clickCard}  />
            )) 
       )}
-        {location.pathname === '/saved-movies' && ( messageForMoviesList ? <p className='result-none'>{messageForMoviesList}</p> :
+        {location.pathname === '/saved-movies' && ( resultCardsList.length ===0 ? <p className='result-none'>{messageForMoviesList}</p> :
           resultCardsList.map(card=>(
              <MoviesCard 
              key={card._id}  

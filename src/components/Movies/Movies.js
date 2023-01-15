@@ -12,11 +12,15 @@ function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, userId, sea
     localStorage.setItem('searchMovie', JSON.stringify(data));
   };
 
+  React.useEffect(()=>{
+    searchMovie(JSON.parse(localStorage.getItem('searchMovie')));
+  },[]);
+
   return(
     <>
       <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen}/>
       <main className="movies">
-        <SearchForm searchMovie={searchMovie} handleSliderClick={handleSliderClick} sliderStatus={sliderStatus} saveSearchedMovie={saveSearchedMovie}/>
+        <SearchForm searchMovie={searchMovie} handleSliderClick={handleSliderClick} sliderStatus={sliderStatus} saveSearchedMovie={saveSearchedMovie} inputValues={JSON.parse(localStorage.getItem('searchMovie'))}/>
         <Preloader preloader={preloader} />
         <MoviesCardList movies={cards} clickCard={likeCard} userId={userId} moviesList={searchAllMovies} messageForMoviesList={messageForMoviesList} />
       </main>

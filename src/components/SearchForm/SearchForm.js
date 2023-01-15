@@ -3,9 +3,9 @@ import './SearchForm.css';
 import LogeSearch from '../../images/iconlogo__search.svg';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({searchMovie, handleSliderClick, sliderStatus, saveSearchedMovie}) {
+function SearchForm({searchMovie, handleSliderClick, sliderStatus, saveSearchedMovie, inputValues}) {
 
-  const [inputValue, setInputValue] = React.useState(JSON.parse(localStorage.getItem('searchMovie')));
+  const [inputValue, setInputValue] = React.useState('');
 
   function changeValue(e) {
     setInputValue(e.target.value);
@@ -14,8 +14,12 @@ function SearchForm({searchMovie, handleSliderClick, sliderStatus, saveSearchedM
   function submitForm(e) {
     e.preventDefault();
     searchMovie(inputValue);
-    //saveSearchedMovie(inputValue)
+    saveSearchedMovie(inputValue)
   };
+
+  React.useEffect(()=>{
+    setInputValue( inputValues );
+  },[inputValues]);
 
   return(
     <section className="search">
