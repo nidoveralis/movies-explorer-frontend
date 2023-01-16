@@ -1,12 +1,10 @@
-import config from "./utils";
-
 class Api {
   constructor(data) {
     this._headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     };
-    this._baseUrl = 'http://localhost:3000';
+    this._baseUrl = 'https://api.movie.diak.nomoredomains.club';
   }
 
   _getResponseData(res) {
