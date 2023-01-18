@@ -4,7 +4,7 @@ import LogeSearch from '../../images/iconlogo__search.svg';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm({searchMovie, handleSliderClick, sliderStatus, saveSearchedMovie, inputValues}) {
-
+console.log(inputValues)
   const [inputValue, setInputValue] = React.useState('');
 
   function changeValue(e) {
@@ -18,7 +18,9 @@ function SearchForm({searchMovie, handleSliderClick, sliderStatus, saveSearchedM
   };
 
   React.useEffect(()=>{
+    if(inputValues!==null){
     setInputValue( inputValues );
+  }
   },[inputValues]);
 
   return(
