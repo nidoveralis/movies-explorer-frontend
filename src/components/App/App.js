@@ -68,6 +68,8 @@ function App() {
   
   function onSingOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('searchMovie');
+    localStorage.removeItem('searchSavedMovie');
     setIsLoggedIn(false);
   };
 
