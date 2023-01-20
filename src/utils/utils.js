@@ -6,4 +6,8 @@ const config = {
   }
 }
 
+export function isValidEmail(email) {
+  return /\S+@\S+\.\S+/.test(email);
+}
+
 export default config;
