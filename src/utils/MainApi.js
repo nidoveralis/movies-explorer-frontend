@@ -45,6 +45,7 @@ class Api {
     .then((response => response.json()))
     .then((data) => {
       if (data.token){
+        localStorage.setItem('token',data.token)
         return data;
       } 
     })
