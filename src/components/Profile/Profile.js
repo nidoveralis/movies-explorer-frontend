@@ -2,6 +2,7 @@ import React from 'react';
 import './Profile.css';
 import Header from '../Header/Header';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import isValidEmail from '../../utils/utils';
 
 function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, message}) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -25,20 +26,33 @@ function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, me
 
   function handleNameInput(e) {
     setName(e.target.value);
-    setIsErrorInput({...isErrorInput, [e.target.name]:e.target.validationMessage});
-    setIsValidInput(e.target.closest('form').checkValidity());
+    if(e.target.value!==currentUser.name) {
+      setIsErrorInput({...isErrorInput, [e.target.name]:e.target.validationMessage});
+      setIsValidInput(e.target.closest('form').checkValidity());
+    }else {
+      setIsValidInput(false);
+    };
   };
 
   function handleEmailInput(e) {
-    setEmail(e.target.value);
-    setIsErrorInput({...isErrorInput, [e.target.name]:e.target.validationMessage});
-    setIsValidInput(e.target.closest('form').checkValidity());
+      setEmail(e.target.value);
+      if(e.target.value!==currentUser.email) {
+        if(isValidEmail((e.target.value)) ){
+          setIsErrorInput({...isErrorInput, [e.target.name]:e.target.validationMessage});
+          setIsValidInput(e.target.closest('form').checkValidity());
+        }else {
+          setIsErrorInput({...isErrorInput, [e.target.name]:'Не валидный email'});
+          setIsValidInput(false);
+        }
+    }else {
+      setIsValidInput(false);
+    };
   };
 
   function editUser(e) {
     e.preventDefault();
     onUpdateUser({name, email});
-    chengeButtonState(e)
+    chengeButtonState(e);
   };
 
   return(
