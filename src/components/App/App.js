@@ -71,6 +71,8 @@ function App() {
     localStorage.removeItem('slider');
     localStorage.removeItem('searchMovie');
     localStorage.removeItem('searchSavedMovie');
+    setMoviesList([]);
+    setMoviesSavedList([]);
     setIsLoggedIn(false);
   };
 
@@ -102,7 +104,6 @@ function App() {
       getSavedMovies();
       setPreloader(false);
     })
-
   };
 
   function removeCard(movie) {
@@ -130,8 +131,8 @@ function App() {
   };
 
  function searchShortMovie(data) {//поиск коротких фильмов
-  if(sliderStatus) {
-    const shortMovieList = data.filter(movie=>movie.duration<=40 && sliderStatus);
+  if(JSON.parse(localStorage.getItem('slider'))) {
+    const shortMovieList = data.filter(movie=>movie.duration<=40);
     if(shortMovieList.length===0) {
       setMessageForMoviesList('Ничего не найдено');
     } else {
@@ -141,30 +142,29 @@ function App() {
   } else {
     return data;
   }};
- 
+
   function filterMovies(data, list) {//фильтр
-    setPreloader(true);
     if(data === '' || data===null) {
       setPreloader(false);
       setMessageForMoviesList('Нужно ввести ключевое слово');
     }else if(data !== '') {
-      const foundCards = list.filter(movie=>movie.nameRU.toLowerCase() === data || movie.nameEN.toLowerCase() === data);
-      console.log(foundCards.length)
-      setMessageForMoviesList(foundCards.length===0 ? 'Ничего не найдено' : '' )
-      //if(foundCards.length===0) {
-       // setMessageForMoviesList('Ничего не найдено');
-       // setPreloader(false);
-      //}else {
-      //  setMessageForMoviesList('');
-        setPreloader(false);
+      const foundCards = list.filter(movie=>{
+        setPreloader(true);
+        if(movie.nameRU.toLowerCase().trim().indexOf(data.toLowerCase())!==-1 || movie.nameEN.toLowerCase().indexOf(data.toLowerCase())!==-1) {
+          setMessageForMoviesList('');
+          setPreloader(false);
+          return movie
+        }else {
+          setMessageForMoviesList('Ничего не найдено');
+          setPreloader(false);
+        }
+      });
         return searchShortMovie(foundCards);
-    //  }
     }
   };
 
   function searchMovie(data) {//поиск фильмов
     const result = filterMovies(data, moviesList);
-    console.log(result,'ll')
     setSearchAllMovies(result ? result : []);
   };
 
@@ -184,7 +184,7 @@ function App() {
   React.useEffect(()=>{///информация о пользователе
     if(isLoggedIn){
       api.getUserInfo()
-      .then(data=>{console.log(data)
+      .then(data=>{
         setCurrentUser(data);
         setUserId(data)
       });
