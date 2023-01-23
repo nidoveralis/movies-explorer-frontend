@@ -6,9 +6,9 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function SavedMovies({isLoggedIn, closeMenu, isMenuOpen, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader}) {
+function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader}) {
 
- function deleteCard(card) {
+  function deleteCard(card) {
   removeCard(card);
  };
 
@@ -21,9 +21,17 @@ function SavedMovies({isLoggedIn, closeMenu, isMenuOpen, removeCard, userId, sea
   localStorage.setItem('searchSavedMovie', JSON.stringify(data));
 };
 
-React.useEffect(()=>{
+function searching() {
   searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
+};
+
+React.useEffect(()=>{
+  searching()
 },[]);
+
+React.useEffect(()=>{
+  searching()
+},[cards]);
 
   return(
     <>

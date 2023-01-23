@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import '../../vendor/normalize.css';
 import '../../vendor/fonts/fonts.css'
 import './App.css';
@@ -10,7 +9,7 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login'
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect, useHistory, useLocation } from 'react-router-dom';
 import {apiMovie} from '../../utils/MoviesApi';
 import {api} from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute';
@@ -18,6 +17,7 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isMenuOpen, setMenuOpen] = React.useState(false);
   const [moviesList, setMoviesList] = React.useState([]);
@@ -37,7 +37,7 @@ function App() {
     setMenuOpen(!isMenuOpen);
   };
 
-  function onRegister(data) {///регистрация qq@mail.ry
+  function onRegister(data) {
     api.signUp(data)
     .then(data=>{
       if(!data.email){
@@ -50,7 +50,7 @@ function App() {
    .catch(()=>setErrServer('При регистрации пользователя произошла ошибка.'));
   };
 
-  function onLogin(data) {///вход cc@mail.ru cc
+  function onLogin(data) {
     api.signIn(data)
     .then(data=>{
       if(!data.token){
@@ -59,7 +59,6 @@ function App() {
         setErrServer('');
         history.push('/movies');
         handleSliderStatus();
-        setIsLoggedIn(true);
         setIsOpen(true);
       }
    })
@@ -67,10 +66,7 @@ function App() {
   };
   
   function onSingOut() {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('slider');
-    localStorage.removeItem('searchMovie');
-    localStorage.removeItem('searchSavedMovie');
+    localStorage.clear();
     setMoviesList([]);
     setMoviesSavedList([]);
     setIsLoggedIn(false);
@@ -94,7 +90,9 @@ function App() {
   };
 
   function getSavedMovies() {
-    api.getMovies().then(res=>setMoviesSavedList(res.data))
+    api.getMovies()
+    .then(res=> setMoviesSavedList(res.data))
+    .catch(err=>console.log(err))
   };
 
   function likeCard(movie) {//добавить фильм
@@ -104,13 +102,15 @@ function App() {
       getSavedMovies();
       setPreloader(false);
     })
+    .catch(err=>console.log(err))
   };
 
   function removeCard(movie) {
     setPreloader(true);
     api.removeMovie(movie.movieId)
-    .then(()=>{
-      getSavedMovies();
+    .then((res)=>{
+      const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie.movieId)})
+      setMoviesSavedList(fiteredSavedmovies);
       setPreloader(false);
     })
     .catch(err=>console.log(err))
@@ -164,33 +164,66 @@ function App() {
   };
 
   function searchMovie(data) {//поиск фильмов
-    const result = filterMovies(data, moviesList);
-    setSearchAllMovies(result ? result : []);
+    if(moviesList.length===0) {
+      apiMovie.getMovies()
+      .then(res=>{
+        const result = filterMovies(data, res);
+        setMoviesList(res);
+        setSearchAllMovies(result ? result : []);
+        })
+      .catch(err=>console.log(err));
+    }else {
+      const result = filterMovies(data, moviesList);
+      setSearchAllMovies(result ? result : []);
+    }
   };
 
   function searchUserMovie(data) {//поиск сохранённых фильмов
-    const resultUserMovie = filterMovies(data, moviesSavedList);
-    setSearchSavedMovies(resultUserMovie ? resultUserMovie : []);
+    if(moviesSavedList.length===0) {
+      api.getMovies()
+      .then(res=>{
+        const result = filterMovies(data, res.data);
+        setMoviesSavedList(res.data);
+        setSearchSavedMovies(result ? result : []);
+        })
+      .catch(err=>console.log(err));
+    }else {
+      const result = filterMovies(data, moviesSavedList);
+      setSearchSavedMovies(result ? result : []);
+    }
   };
 
-  React.useEffect(()=> {////загрузает карточки
-    apiMovie.getMovies()
-    .then(res=>{
-      setMoviesList(res);
+  React.useEffect(()=>{//информация о mov
+    if(isLoggedIn){
+      api.getMovies()
+      .then(data=>{
+        setMoviesSavedList(data.data);
       })
-    getSavedMovies();
-  }, [isLoggedIn]);  
+      .catch(err=>console.log(err));
+    }},[currentUser,isLoggedIn]);
 
-  React.useEffect(()=>{///информация о пользователе
+  React.useEffect(()=>{//информация о пользователе
     if(isLoggedIn){
       api.getUserInfo()
       .then(data=>{
         setCurrentUser(data);
         setUserId(data)
-      });
+      })
+      .catch(err=>console.log(err));
     }
   },[isLoggedIn]);
-
+  
+  React.useEffect(()=>{
+    const pathName = location.pathname;
+    if(localStorage.getItem('token')){
+      setIsLoggedIn(true);
+      setErrServer('');
+      history.push(pathName);
+      handleSliderStatus();
+      setIsOpen(true);
+    };
+  },[]);
+  
   return (
     <div className="app">
       <CurrentUserContext.Provider value={currentUser}>
@@ -226,8 +259,8 @@ function App() {
           
           <ProtectedRoute path="/saved-movies" 
             isLoggedIn={isLoggedIn}
+            cards={moviesSavedList}
             compoment={SavedMovies}
-            cards = {moviesSavedList} 
             closeMenu = {closeMenu} 
             isMenuOpen ={isMenuOpen} 
             errServer = {errServer} 

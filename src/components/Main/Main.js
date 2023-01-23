@@ -25,5 +25,3 @@ function Main({isLoggedIn,closeMenu, isMenuOpen }) {
 }
 
 export default Main;
-
-////AboutProject измени повторяющиеся в разных размерах отступы и шрифт
