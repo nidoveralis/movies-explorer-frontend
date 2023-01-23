@@ -120,6 +120,15 @@ class Api {
     .then(res => this._getResponseData(res))
   }
 
+  logout() {
+    return fetch(`${this._baseUrl}/signout`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+    })
+    .then(res => this._getResponseData(res))
+  }
+
 };
 
 export const api = new Api();

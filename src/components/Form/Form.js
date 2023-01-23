@@ -4,6 +4,7 @@ import './Form.css';
 import logo from '../../images/logo.svg';
 
 function Form({ title, submitButton, linkTitle, link, formValues, errServer, linkName }) {
+  
   const location = useLocation();
   const [isValidInput, setIsValidInput] = React.useState(false);
   const [isErrorInput, setIsErrorInput] = React.useState({});

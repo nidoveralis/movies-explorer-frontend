@@ -4,7 +4,7 @@ import {Route, Switch, Link} from 'react-router-dom';
 
 function Navigation({isLoggedIn, isOpenMenu, onClose}) {
 
-  const classNameMenu = `navigation__menu ${isOpenMenu ? "navigation__menu_opened" : ""}`;
+  const classNameMenu = `navigation__menu ${isOpenMenu ? "navigation__menu_opened" : ""} `;
   const classNameCloseButton = `navigation__close ${isOpenMenu ? "navigation__close_active" : ""}`;
 
   return (
