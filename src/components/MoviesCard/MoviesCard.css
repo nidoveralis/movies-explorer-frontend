@@ -79,12 +79,14 @@
 
 .moviesCard-button_remove {
   width: 21px;
-  background-color: #F9F9F9; 
+  background-color: #F9F9F9;
+  opacity: 1;
 }
 
 .moviesCard-button_saved {
   width: 21px;
   background-color: #FF3055;
+  opacity: 1;
 }
 
 @media screen and (min-width: 865px) {
