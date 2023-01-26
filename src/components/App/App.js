@@ -214,28 +214,44 @@ function App() {
       .finally(() => setPreloader(false));
     }},[currentUser,isLoggedIn]);
 
-  React.useEffect(()=>{//информация о пользователе
-    if(isLoggedIn){
+ // React.useEffect(()=>{//информация о пользователе
+   // if(isLoggedIn){
+   //   api.getUserInfo()
+   //   .then(data=>{
+   //     setCurrentUser(data);
+   //     setUserId(data)
+   //   })
+   //   .catch(err=>console.log(err));
+  //  }
+ // },[isLoggedIn]);
+
+React.useEffect(()=>{//информация о пользователе
+  const pathName = location.pathname;
       api.getUserInfo()
-      .then(data=>{
-        setCurrentUser(data);
-        setUserId(data)
+      .then(data=>{console.log(data)
+        if(!data.message){
+          setIsLoggedIn(true);
+          history.push(pathName);
+          setIsOpen(true);
+          setErrServer('');
+          setCurrentUser(data);
+          setUserId(data);
+      }
       })
-      .catch(err=>console.log(err));
-    }
+      .catch(err=>{setIsLoggedIn(false);console.log(err)});
   },[isLoggedIn]);
 
-  React.useEffect(()=>{//авторизация
-    const token = localStorage.getItem('token');
-    const pathName = location.pathname;
-    if(token){
-      history.push(pathName);
-      setIsLoggedIn(true);
-      setErrServer('');
-      handleSliderStatus();
-      setIsOpen(true);
-    };console.log(isLoggedIn)
-  },[isLoggedIn]);
+ // React.useEffect(()=>{//авторизация
+  //  const token = localStorage.getItem('token');
+  //  const pathName = location.pathname;
+  //  if(token){
+ //     history.push(pathName);
+ //     setIsLoggedIn(true);
+ //     setErrServer('');
+ //     handleSliderStatus();
+ //     setIsOpen(true);
+ //   };console.log(isLoggedIn)
+ // },[isLoggedIn]);
 
   return (
     <div className="app">
@@ -254,7 +270,7 @@ function App() {
           {isLoggedIn ? <Redirect to="/movies" /> :  <Register formValues={onRegister} errServer={errServer}/> }
           </Route>
 
-          <ProtectedRoute path="/movies" 
+          <ProtectedRoute  path="/movies" 
             isLoggedIn={isLoggedIn}
             compoment={Movies}
             closeMenu = {closeMenu} 
