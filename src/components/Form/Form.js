@@ -11,7 +11,7 @@ function Form({ title, submitButton, linkTitle, link, formValues, errServer, lin
   const [isValidInputEmail, setIsValidInputEmail] = React.useState(false);
   const [isErrorInput, setIsErrorInput] = React.useState({});
   const [formValue,setFormValue] = React.useState({});
-  const buttonClass = `element-form__button-submit ${isValidInput && isValidInputEmail ? "" : "element-form__button-submit_error"} `
+  const buttonClass = `element-form__button-submit ${isValidInputEmail && isValidInput ? "" : "element-form__button-submit_error"} `
 
   function namesInputValue(e) {
     const input = e.target;
@@ -25,7 +25,7 @@ function Form({ title, submitButton, linkTitle, link, formValues, errServer, lin
     if(isValidEmail(input.value)) {
       setIsErrorInput({...isErrorInput, [input.name]:input.validationMessage});
       setFormValue({...formValue, [input.name]:input.value});
-      setIsValidInputEmail(e.target.closest('form').checkValidity());
+      setIsValidInputEmail(true)
     }else {
       setIsErrorInput({...isErrorInput, [e.target.name]:'Не валидный email'});
       setIsValidInputEmail(false);

@@ -4,7 +4,7 @@ class Api {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     };
-    this._baseUrl = 'https://api.movie.diak.nomoredomains.club';
+    this._baseUrl = 'http://localhost:3000'//https://api.movie.diak.nomoredomains.club';
   }
 
   _getResponseData(res) {
@@ -45,10 +45,12 @@ class Api {
     .then((response => response.json()))
     .then((data) => {
       if (data.token){
-        localStorage.setItem('token',data.token)
-        return data;
-      } 
+        return data.token;
+      }else {
+        return data
+      }
     })
+    .catch(err=>{return data})
   };
 
   getUserInfo() {
