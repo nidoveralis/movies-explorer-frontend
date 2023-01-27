@@ -20,6 +20,7 @@ function Movies({isLoggedIn, closeMenu, isMenuOpen, likeCard, userId, searchAllM
   React.useEffect(()=>{
     searchMovie(JSON.parse(localStorage.getItem('searchMovie')));
   },[]);
+  
   return(
     <>
       <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen}/>

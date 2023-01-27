@@ -7,39 +7,36 @@ import { useLocation } from 'react-router-dom';
 function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
 
     const location = useLocation();
-    const [resultCardsList, setResultCardsList] = React.useState([]);
+    
     const [windowSize, setWindowSize] = React.useState(window.innerWidth);
     const [cardListSize, setCardListSize] = React.useState();
     const [firstSize, setfirstSize] = React.useState();
 
-    const buttonOtherClass = `moviesCardList__other ${resultCardsList.length === moviesList.length || moviesList.length === setfirstSize  ? 'button-none' : ''}`;
-    
+    const resultCardsList = moviesList.slice(0, firstSize);
+
+    const buttonOtherClass = `moviesCardList__other ${resultCardsList.length === moviesList.length || moviesList.length === setfirstSize  ? 'button-none' : ''} `;
+
     function plusCards() {
       setfirstSize(firstSize + cardListSize);
     };
 
     React.useEffect(()=>{
-      setResultCardsList(moviesList);
-    }, [moviesList]);
-
-
-    React.useEffect(()=>{
-      if(windowSize <=768) {
+      if(windowSize < 1279) {
         setCardListSize(2)
-      }else if (windowSize >768 ) {
+      }else if (windowSize >= 1280 ) {
         setCardListSize(3)
       }
     },[windowSize]);
 
     React.useEffect(() => {
-    if(windowSize >=768) {
+    if(windowSize >= 1280) {
       setfirstSize(12);
-    }else if (windowSize <= 768 && windowSize>481) {
+    }else if (windowSize < 1280 && windowSize >= 768) {
       setfirstSize(8);
-    }else if (windowSize <=480) {
+    }else if (windowSize < 768) {
       setfirstSize(5);
     }
-    },[]);
+    },[windowSize]);
 
     React.useEffect(() => {
       function handleWindowResize() {
@@ -48,13 +45,6 @@ function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
     
       window.addEventListener('resize', handleWindowResize);
 
-    if(windowSize >=768) {
-      setResultCardsList(moviesList.slice(0,firstSize));
-    }else if (windowSize <= 768 && windowSize>481) {
-      setResultCardsList(moviesList.slice(0,firstSize));
-    }else if (windowSize <=480) {
-      setResultCardsList(moviesList.slice(0,firstSize));
-    }
       return () => {
         window.removeEventListener('resize', handleWindowResize);
       };
@@ -63,7 +53,7 @@ function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
   return(
     <section className="moviesCardList">
       <div className="moviesCardList__content">
-      {location.pathname === '/movies' && ( resultCardsList.length ===0 ? <p className='result-none'>{messageForMoviesList}</p> :
+      {location.pathname === '/movies' && ( resultCardsList.length === 0 ? <p className='result-none'>{messageForMoviesList}</p> :
           resultCardsList.map(card=>(
              <MoviesCard 
              key={card.id} 
@@ -83,7 +73,7 @@ function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
             clickCard={clickCard}  />
            )) 
       )}
-        {location.pathname === '/saved-movies' && ( resultCardsList.length ===0 ? <p className='result-none'>{messageForMoviesList}</p> :
+        {location.pathname === '/saved-movies' && ( resultCardsList.length === 0 ? <p className='result-none'>{messageForMoviesList}</p> :
           resultCardsList.map(card=>(
              <MoviesCard 
              key={card._id}  
@@ -107,6 +97,6 @@ function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
       <button className={buttonOtherClass} onClick={plusCards}>Ещё</button>
     </section>
   )
-}
+};
 
 export default MoviesCardList;

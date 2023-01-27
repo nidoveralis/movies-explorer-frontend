@@ -44,13 +44,8 @@ class Api {
     )
     .then((response => response.json()))
     .then((data) => {
-      if (data.token){
-        return data.token;
-      }else {
-        return data
-      }
+      return data
     })
-    .catch(err=>{return data})
   };
 
   getUserInfo() {

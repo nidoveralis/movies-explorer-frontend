@@ -15,23 +15,23 @@ function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, user
  function clickSlider() {
   handleSliderClick();
   searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
-};
+  };
 
  function saveSearchedMovie(data) {
   localStorage.setItem('searchSavedMovie', JSON.stringify(data));
-};
+  };
 
-function searching() {
-  searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
-};
+  function searching() {
+    searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
+  };
 
-React.useEffect(()=>{
-  searching()
-},[]);
+  React.useEffect(()=>{
+    searching()
+  },[]);
 
-React.useEffect(()=>{
-  searching()
-},[cards]);
+  React.useEffect(()=>{
+    searching()
+  },[cards]);
 
   return(
     <>
