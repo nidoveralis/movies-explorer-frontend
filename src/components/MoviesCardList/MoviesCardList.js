@@ -4,10 +4,10 @@ import config from '../../utils/utils';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
+function MoviesCardList({clickCard, removeCard, userId, moviesList, messageForMoviesList, cards}) {
 
     const location = useLocation();
-    
+
     const [windowSize, setWindowSize] = React.useState(window.innerWidth);
     const [cardListSize, setCardListSize] = React.useState();
     const [firstSize, setfirstSize] = React.useState();
@@ -62,15 +62,17 @@ function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
              duration={card.duration}
              year={card.year} 
              description={card.description}
-            image={config.baseUrl+card.image.url} 
+             image={config.baseUrl+card.image.url} 
              trailerLink={card.trailerLink}
-            thumbnail={config.baseUrl+card.image.formats.thumbnail.url}
+             thumbnail={config.baseUrl+card.image.formats.thumbnail.url}
              owner={card.owner}
              movieId={card.id}
-            nameRU={card.nameRU} 
-            nameEN={card.nameEN}
-            userId={userId}
-            clickCard={clickCard}  />
+             nameRU={card.nameRU} 
+             nameEN={card.nameEN}
+             clickCard={clickCard}
+             removeCard={removeCard} 
+             cards={cards}  
+              />
            )) 
       )}
         {location.pathname === '/saved-movies' && ( resultCardsList.length === 0 ? <p className='result-none'>{messageForMoviesList}</p> :
@@ -86,11 +88,13 @@ function MoviesCardList({clickCard, userId, moviesList, messageForMoviesList}) {
              trailerLink={card.trailerLink}
             thumbnail={card.thumbnail}
              owner={card.owner}
-             movieId={card._id}
+             id={card._id}
+             movieId={card.movieId}
             nameRU={card.nameRU} 
             nameEN={card.nameEN}
-            userId={userId}
-            clickCard={clickCard} />
+            clickCard={clickCard}
+            cards={cards} 
+             />
            )) )
         }
       </div>

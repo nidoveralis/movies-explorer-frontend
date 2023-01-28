@@ -39,7 +39,7 @@ function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, user
       <main className="savedMovies">
         <SearchForm searchMovie={searchMovie} handleSliderClick={clickSlider} sliderStatus={sliderStatus} saveSearchedMovie={saveSearchedMovie} inputValues={JSON.parse(localStorage.getItem('searchSavedMovie'))} />
         <Preloader preloader={preloader} />
-        <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={searchAllMovies} messageForMoviesList={messageForMoviesList} />
+        <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={searchAllMovies} messageForMoviesList={messageForMoviesList} cards={cards} />
       </main>
     <Footer />
     </>

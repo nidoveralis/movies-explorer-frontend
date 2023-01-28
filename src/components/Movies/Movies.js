@@ -6,10 +6,18 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function Movies({isLoggedIn, closeMenu, isMenuOpen, likeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader }) {
-
+function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader }) {
+  
   function saveSearchedMovie(data) {
     localStorage.setItem('searchMovie', JSON.stringify(data));
+  };
+
+  function clickSavedCard(data) {
+    const doubledCard = cards.find((item) =>{ return (item.movieId === data.movieId)});
+    removeCard(doubledCard);
+   // doubledCard.forEach(el => {
+    //  removeCard(el);
+    //});
   };
 
   function clickSlider() {
@@ -20,14 +28,14 @@ function Movies({isLoggedIn, closeMenu, isMenuOpen, likeCard, userId, searchAllM
   React.useEffect(()=>{
     searchMovie(JSON.parse(localStorage.getItem('searchMovie')));
   },[]);
-  
+
   return(
     <>
       <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen}/>
       <main className="movies">
         <SearchForm searchMovie={searchMovie} handleSliderClick={clickSlider} sliderStatus={sliderStatus} saveSearchedMovie={saveSearchedMovie} inputValues={JSON.parse(localStorage.getItem('searchMovie'))}/>
         <Preloader preloader={preloader} />
-        <MoviesCardList clickCard={likeCard} userId={userId} moviesList={searchAllMovies} messageForMoviesList={messageForMoviesList} />
+        <MoviesCardList clickCard={likeCard} removeCard={clickSavedCard} userId={userId} moviesList={searchAllMovies} messageForMoviesList={messageForMoviesList} cards={cards} />
       </main>
       <Footer />
     </>
