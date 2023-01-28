@@ -118,9 +118,9 @@ function App() {
   function removeCard(movie) {
     setPreloader(true);
     api.removeMovie(movie.id || movie._id)
-    .then((res)=>{
+    .then((res)=>{console.log(res)
       const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie.id || movie._id)})
-      setMoviesSavedList(fiteredSavedmovies);
+      setMoviesSavedList(fiteredSavedmovies);console.log(fiteredSavedmovies)
     })
     .catch(err=>console.log(err))
     .finally(() => setPreloader(false));
@@ -203,7 +203,17 @@ function App() {
       setPreloader(false);
       setSearchSavedMovies(result ? result : []);
     }
-  };  
+  };
+
+  React.useEffect(()=>{//загрузка фильмов
+      setPreloader(true);
+      api.getMovies()
+      .then(data=>{
+        setMoviesSavedList(data.data);
+      })
+      .catch(err=>console.log(err))
+      .finally(() => setPreloader(false));
+    },[location]);
 
   React.useEffect(()=>{//загрузка фильмов
     if(isLoggedIn){
@@ -227,7 +237,7 @@ React.useEffect(()=>{//информация о пользователе
           setErrServer('');
           setCurrentUser(data);
           setUserId(data._id);
-      }
+      };
       })
       .catch(err=>{setIsLoggedIn(false);console.log(err)});
   },[isLoggedIn]);
