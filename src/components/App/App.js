@@ -117,9 +117,9 @@ function App() {
 
   function removeCard(movie) {
     setPreloader(true);
-    api.removeMovie(movie.movieId)
+    api.removeMovie(movie.id || movie._id)
     .then((res)=>{
-      const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie.movieId)})
+      const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie.id || movie._id)})
       setMoviesSavedList(fiteredSavedmovies);
     })
     .catch(err=>console.log(err))
@@ -170,8 +170,8 @@ function App() {
   };
 
   function searchMovie(data) {//поиск фильмов
+    setPreloader(true);
     if(moviesList.length===0) {
-      setPreloader(true);
       apiMovie.getMovies()
       .then(res=>{
         const result = filterMovies(data, res);
@@ -182,13 +182,14 @@ function App() {
       .finally(() => setPreloader(false));
     }else {
       const result = filterMovies(data, moviesList);
+      setPreloader(false);
       setSearchAllMovies(result ? result : []);
     }
   };
 
   function searchUserMovie(data) {//поиск сохранённых фильмов
+    setPreloader(true);
     if(moviesSavedList.length===0) {
-      setPreloader(true);
       api.getMovies()
       .then(res=>{
         const result = filterMovies(data, res.data);
@@ -199,6 +200,7 @@ function App() {
       .finally(() => setPreloader(false));
     }else {
       const result = filterMovies(data, moviesSavedList);
+      setPreloader(false);
       setSearchSavedMovies(result ? result : []);
     }
   };  
@@ -214,44 +216,21 @@ function App() {
       .finally(() => setPreloader(false));
     }},[currentUser,isLoggedIn]);
 
- // React.useEffect(()=>{//информация о пользователе
-   // if(isLoggedIn){
-   //   api.getUserInfo()
-   //   .then(data=>{
-   //     setCurrentUser(data);
-   //     setUserId(data)
-   //   })
-   //   .catch(err=>console.log(err));
-  //  }
- // },[isLoggedIn]);
-
 React.useEffect(()=>{//информация о пользователе
   const pathName = location.pathname;
       api.getUserInfo()
-      .then(data=>{console.log(data)
+      .then(data=>{
         if(!data.message){
           setIsLoggedIn(true);
           history.push(pathName);
           setIsOpen(true);
           setErrServer('');
           setCurrentUser(data);
-          setUserId(data);
+          setUserId(data._id);
       }
       })
       .catch(err=>{setIsLoggedIn(false);console.log(err)});
   },[isLoggedIn]);
-
- // React.useEffect(()=>{//авторизация
-  //  const token = localStorage.getItem('token');
-  //  const pathName = location.pathname;
-  //  if(token){
- //     history.push(pathName);
- //     setIsLoggedIn(true);
- //     setErrServer('');
- //     handleSliderStatus();
- //     setIsOpen(true);
- //   };console.log(isLoggedIn)
- // },[isLoggedIn]);
 
   return (
     <div className="app">
@@ -272,12 +251,14 @@ React.useEffect(()=>{//информация о пользователе
 
           <ProtectedRoute  path="/movies" 
             isLoggedIn={isLoggedIn}
+            cards={moviesSavedList}
             compoment={Movies}
             closeMenu = {closeMenu} 
             isMenuOpen ={isMenuOpen} 
             errServer = {errServer} 
             loggedIn={isLoggedIn}
             likeCard={likeCard}
+            removeCard={removeCard}
             userId={userId} 
             searchAllMovies={searchAllMovies}
             searchMovie={searchMovie}
