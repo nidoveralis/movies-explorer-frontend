@@ -33,19 +33,19 @@ function App() {
   const [preloader,setPreloader] = React.useState(false);
   const [messageForMoviesList, setMessageForMoviesList] = React.useState('');
   const [sliderStatus, setSliderStatus] = React.useState();
-console.log(sliderStatus)
+
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
   };
 
   function onRegister(data) {
     api.signUp(data)
-    .then(data=>{
-      if(!data.email){
-        setErrServer(data.message);
+    .then(res=>{
+      if(!res.email){
+        setErrServer(res.message);
      } else {
       setErrServer('');
-      history.push('/signin');
+      onLogin(data);
      }
    })
    .catch(()=>setErrServer('При регистрации пользователя произошла ошибка.'));
@@ -73,6 +73,7 @@ console.log(sliderStatus)
       setMoviesList([]);
       setMoviesSavedList([]);
       setIsLoggedIn(false);
+      setErrServer('');
       history.push('/');
       })
       .catch((e)=>{console.log(e)})
@@ -116,7 +117,7 @@ console.log(sliderStatus)
   };
 
   function removeCard(movie) {
-    //setPreloader(true);
+    setPreloader(true);
     api.removeMovie(movie.id || movie._id)
     .then((res)=>{console.log(res)
       const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie.id || movie._id)})
@@ -127,7 +128,6 @@ console.log(sliderStatus)
   };
  
   function handleSliderStatus() {//загрузка слайдера
-    console.log(JSON.parse(localStorage.getItem('slider')))
     if(JSON.parse(localStorage.getItem('slider'))===null) {
       localStorage.setItem('slider', JSON.stringify(true));
       setSliderStatus(true);
