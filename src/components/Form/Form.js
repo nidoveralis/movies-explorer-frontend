@@ -21,7 +21,7 @@ function Form({ title, submitButton, linkTitle, link, formValues, errServer, lin
    };
 
    function emailInputValue(e) {
-    const input = e.target;
+    const input = e.target; 
     if(isValidEmail(input.value)) {
       setIsErrorInput({...isErrorInput, [input.name]:input.validationMessage});
       setFormValue({...formValue, [input.name]:input.value});

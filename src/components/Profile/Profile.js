@@ -2,7 +2,7 @@ import React from 'react';
 import './Profile.css';
 import Header from '../Header/Header';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import isValidEmail from '../../utils/utils';
+import {isValidEmail} from '../../utils/utils';
 
 function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, message}) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -53,6 +53,7 @@ function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, me
     e.preventDefault();
     onUpdateUser({name, email});
     chengeButtonState(e);
+    setIsValidInput(false);
   };
 
   return(
