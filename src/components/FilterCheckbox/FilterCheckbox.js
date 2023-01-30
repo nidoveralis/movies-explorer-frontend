@@ -2,7 +2,7 @@ import './FilterCheckbox.css';
 import React from 'react';
 
 function FilterCheckbox({onClickChechbox, sliderClick}) {
-  
+
   const tumblrStatusClassName = `filter-tumblr ${sliderClick ? "filter-tumblr_active" : ""} `;
   const sliderStatusClassName = `filter-tumblr__slider ${sliderClick ? "filter-tumblr__slider_active" : ""} `;
   

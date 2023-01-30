@@ -33,7 +33,7 @@ function App() {
   const [preloader,setPreloader] = React.useState(false);
   const [messageForMoviesList, setMessageForMoviesList] = React.useState('');
   const [sliderStatus, setSliderStatus] = React.useState();
-
+console.log(sliderStatus)
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
   };
@@ -116,7 +116,7 @@ function App() {
   };
 
   function removeCard(movie) {
-    setPreloader(true);
+    //setPreloader(true);
     api.removeMovie(movie.id || movie._id)
     .then((res)=>{console.log(res)
       const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie.id || movie._id)})
@@ -127,6 +127,7 @@ function App() {
   };
  
   function handleSliderStatus() {//загрузка слайдера
+    console.log(JSON.parse(localStorage.getItem('slider')))
     if(JSON.parse(localStorage.getItem('slider'))===null) {
       localStorage.setItem('slider', JSON.stringify(true));
       setSliderStatus(true);
@@ -188,13 +189,15 @@ function App() {
   };
 
   function searchUserMovie(data) {//поиск сохранённых фильмов
-    setPreloader(true);
+    //setPreloader(true);
     if(moviesSavedList.length===0) {
+     // setPreloader(true);
       api.getMovies()
       .then(res=>{
         const result = filterMovies(data, res.data);
         setMoviesSavedList(res.data);
         setSearchSavedMovies(result ? result : []);
+        setPreloader(false);
         })
       .catch(err=>console.log(err))
       .finally(() => setPreloader(false));
@@ -217,6 +220,7 @@ function App() {
 
   React.useEffect(()=>{//загрузка фильмов
     if(isLoggedIn){
+      handleSliderStatus();
       setPreloader(true);
       api.getMovies()
       .then(data=>{
