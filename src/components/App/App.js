@@ -110,7 +110,7 @@ function App() {
     setPreloader(true);
     api.addMovies(movie)
     .then(()=>{
-      getSavedMovies();
+   //   getSavedMovies();
     })
     .catch(err=>console.log(err))
     .finally(() => setPreloader(false));
@@ -137,6 +137,7 @@ function App() {
 }}
 
   function filterMovies(data, list, slider) {//фильтр
+    console.log(data, list, slider)
       const foundCards = list.filter(movie=>{
         if(movie.nameRU.toLowerCase().trim().indexOf(data.toLowerCase())!==-1 || movie.nameEN.toLowerCase().indexOf(data.toLowerCase())!==-1) {
          return movie

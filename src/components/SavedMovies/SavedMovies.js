@@ -21,9 +21,9 @@ function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, user
 
   };
 
- function saveSearchedMovie(data) {
+ function searchinghMovie(data) {
   setInputValue(data)
-  searchMovie(data, JSON.parse(localStorage.getItem('sliderSavedMovies')))
+  searchMovie(data, JSON.parse(localStorage.getItem('sliderSavedMovies')));
   };
 
   React.useEffect(()=>{
@@ -35,7 +35,7 @@ function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, user
     <>
       <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen} />
       <main className="savedMovies">
-        <SearchForm searchMovie={saveSearchedMovie} handleSliderClick={clickSlider} sliderStatus={sliderStatusSavedMovies}/>
+        <SearchForm searchMovie={searchinghMovie} handleSliderClick={clickSlider} sliderStatus={sliderStatusSavedMovies}/>
         <Preloader preloader={preloader} />
         <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={searchAllMovies.length === 0 && messageForMoviesList==='' ? cards : searchAllMovies} messageForMoviesList={messageForMoviesList} cards={cards} />
       </main>
