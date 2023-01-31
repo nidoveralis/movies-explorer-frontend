@@ -6,20 +6,24 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader }) {
+function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, preloader }) {
+
+  const [sliderStatus, setsliderStatus] = React.useState();
+
+  function clickSlider() {
+    setsliderStatus(!sliderStatus);
+    localStorage.setItem('slider', JSON.stringify(!sliderStatus));
+    searchMovie(JSON.parse(localStorage.getItem('searchMovie')), JSON.parse(localStorage.getItem('slider')));
+    };
 
   function clickSavedCard(data) {
     const doubledCard = cards.find((item) =>{ return (item.movieId === data.movieId)});
     removeCard(doubledCard);
   };
 
-  function clickSlider() {
-    handleSliderClick();
-    searchMovie(JSON.parse(localStorage.getItem('searchMovie')));
-  };
-
-  React.useEffect(()=>{
-    searchMovie(JSON.parse(localStorage.getItem('searchMovie')));
+  React.useEffect(()=>{console.log(JSON.parse(localStorage.getItem('slider')))
+    searchMovie(JSON.parse(localStorage.getItem('searchMovie')), sliderStatus);
+    setsliderStatus(JSON.parse(localStorage.getItem('slider')) || false)
   },[]);
 
   return(

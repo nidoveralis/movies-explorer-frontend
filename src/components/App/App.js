@@ -33,7 +33,7 @@ function App() {
   const [searchSavedMovies, setSearchSavedMovies] = React.useState([]);
   const [preloader,setPreloader] = React.useState(false);
   const [messageForMoviesList, setMessageForMoviesList] = React.useState('');
-  const [sliderStatus, setSliderStatus] = React.useState();
+  const [messageForUserMoviesList, setMessageForUserMoviesList] = React.useState('');
 
   function closeMenu() {//открывает, закрывает бургер меню
     setMenuOpen(!isMenuOpen);
@@ -60,7 +60,6 @@ function App() {
       }else {
         setErrServer('');
         history.push('/movies');
-        handleSliderStatus();
         setIsOpen(true);
         setIsLoggedIn(true);
       }
@@ -127,75 +126,56 @@ function App() {
     .catch(err=>console.log(err))
     .finally(() => setPreloader(false));
   };
- 
-  function handleSliderStatus() {//загрузка слайдера
-    if(JSON.parse(localStorage.getItem('slider'))===null) {
-      localStorage.setItem('slider', JSON.stringify(true));
-      setSliderStatus(true);
-    }else {
-      setSliderStatus(JSON.parse(localStorage.getItem('slider')));
-    }
-  };
 
-  function handleSliderClick() {
-    setSliderStatus(!sliderStatus);
-    localStorage.setItem('slider', JSON.stringify(!sliderStatus));
-  };
-
- function searchShortMovie(data) {//поиск коротких фильмов
-  if(JSON.parse(localStorage.getItem('slider'))) {
+ function searchShortMovie(data, slider) {//поиск коротких фильмов
+  if(slider) {
     const shortMovieList = data.filter(movie=>movie.duration<=TIME_SHOR_FILM);
-    if(shortMovieList.length===0) {
-      setMessageForMoviesList('Ничего не найдено');
-    } else {
-      setMessageForMoviesList('');
+      setMessageForMoviesList(shortMovieList.length===0 ? 'Ничего не найдено' : '');
       return shortMovieList;
-    }
   } else {
-    return data;
-  }};
+   return data;
+}}
 
-  function filterMovies(data, list) {//фильтр
-    if(data === '' || data===null) {
-      setMessageForMoviesList('Нужно ввести ключевое слово');
-    }else if(data !== '') {
+  function filterMovies(data, list, slider) {//фильтр
       const foundCards = list.filter(movie=>{
         if(movie.nameRU.toLowerCase().trim().indexOf(data.toLowerCase())!==-1 || movie.nameEN.toLowerCase().indexOf(data.toLowerCase())!==-1) {
-          setMessageForMoviesList('');
-          return movie
-        }else {
-          setMessageForMoviesList('Ничего не найдено');
+         return movie
         }
       });
-        return searchShortMovie(foundCards);
-    }
+        return searchShortMovie(foundCards,slider);
   };
 
-  function searchMovie(data) {//поиск фильмов
-    localStorage.setItem('searchMovie', JSON.stringify(data));
-    setPreloader(true);
-    if(moviesList.length===0) {
-      apiMovie.getMovies()
-      .then(res=>{
-        const result = filterMovies(data, res);
-        setMoviesList(res);
+  function searchMovie(data, slider) {//поиск фильмов
+    if(data === '' || data === null) {
+      setMessageForMoviesList('Нужно ввести ключевое слово');
+    }else if(data !== '') {
+        localStorage.setItem('searchMovie', JSON.stringify(data));
+      setPreloader(true);
+      if(moviesList.length===0) {
+        apiMovie.getMovies()
+        .then(res=>{
+          const result = filterMovies(data, res, slider);
+          setMoviesList(res);
+          setSearchAllMovies(result ? result : []);
+          })
+        .catch(err=>console.log(err))
+        .finally(() => setPreloader(false));
+      }else {
+        const result = filterMovies(data, moviesList, slider);
+        setPreloader(false);
         setSearchAllMovies(result ? result : []);
-        })
-      .catch(err=>console.log(err))
-      .finally(() => setPreloader(false));
-    }else {
-      const result = filterMovies(data, moviesList);
-      setPreloader(false);
-      setSearchAllMovies(result ? result : []);
+        setMessageForMoviesList('Ничего не найдено');
+      }
     }
   };
 
-  function searchUserMovie(data) {//поиск сохранённых фильмов
-    setPreloader(true);
+  function searchUserMovie(data, slider) {//поиск сохранённых фильмов
+    if(data && data!==''){
+      setPreloader(true);
     if(moviesSavedList.length===0) {
       api.getMovies()
       .then(res=>{
-        const result = filterMovies(data, res.data);
+        const result = filterMovies(data, res.data,slider);
         setMoviesSavedList(res.data);
         setSearchSavedMovies(result ? result : []);
         setPreloader(false);
@@ -203,9 +183,13 @@ function App() {
       .catch(err=>console.log(err))
       .finally(() => setPreloader(false));
     }else {
-      const result = filterMovies(data, moviesSavedList);
+      const result = filterMovies(data, moviesSavedList, slider);
       setPreloader(false);
       setSearchSavedMovies(result ? result : []);
+      setMessageForUserMoviesList(!result || result.length===0 ? 'Ничего не найдено' : '');
+    }} else if(data==='') {
+      setSearchSavedMovies(searchShortMovie(moviesSavedList, slider))
+      setMessageForUserMoviesList('');
     }
   };
 
@@ -219,9 +203,8 @@ function App() {
       .finally(() => setPreloader(false));
     },[location]);
 
-  React.useEffect(()=>{//загрузка фильмов
+  React.useEffect(()=>{//загрузка фильмов 
     if(isLoggedIn){
-      handleSliderStatus();
       setPreloader(true);
       api.getMovies()
       .then(data=>{
@@ -278,8 +261,6 @@ React.useEffect(()=>{//информация о пользователе
             searchAllMovies={searchAllMovies}
             searchMovie={searchMovie}
             messageForMoviesList={messageForMoviesList}
-            handleSliderClick={handleSliderClick}
-            sliderStatus={sliderStatus}
             preloader={preloader}>
           </ProtectedRoute>
           
@@ -295,9 +276,7 @@ React.useEffect(()=>{//информация о пользователе
             userId={userId} 
             searchAllMovies={searchSavedMovies}
             searchMovie={searchUserMovie}
-            messageForMoviesList={messageForMoviesList}
-            handleSliderClick={handleSliderClick}
-            sliderStatus={sliderStatus}
+            messageForMoviesList={messageForUserMoviesList}
             preloader={preloader}>
           </ProtectedRoute>
 

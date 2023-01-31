@@ -6,40 +6,38 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, handleSliderClick, sliderStatus, preloader}) {
+function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, preloader}) {
+  const [sliderStatusSavedMovies, setSliderStatusSavedMovies] = React.useState();
+  const [inputValue, setInputValue] = React.useState('');
 
   function deleteCard(card) {
   removeCard(card);
  };
 
- //function clickSlider() {
-//  handleSliderClick();
-//  searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
-//  };
+ function clickSlider() {
+  setSliderStatusSavedMovies(!sliderStatusSavedMovies);
+  localStorage.setItem('sliderSavedMovies', JSON.stringify(!sliderStatusSavedMovies));
+  searchMovie(inputValue, JSON.parse(localStorage.getItem('sliderSavedMovies')))
 
- //function saveSearchedMovie(data) {
- // localStorage.setItem('searchSavedMovie', JSON.stringify(data));
- // };
+  };
 
-  //function searching() {
-  //  searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
-  //};
+ function saveSearchedMovie(data) {
+  setInputValue(data)
+  searchMovie(data, JSON.parse(localStorage.getItem('sliderSavedMovies')))
+  };
 
-  //React.useEffect(()=>{
-  //  searching()
- // },[]);
-
- // React.useEffect(()=>{
- //   searching()
- // },[cards]);
+  React.useEffect(()=>{
+    searchMovie(inputValue, JSON.parse(localStorage.getItem('sliderSavedMovies')))
+    setSliderStatusSavedMovies(JSON.parse(localStorage.getItem('sliderSavedMovies')) || false)
+  },[]);
 
   return(
     <>
       <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen} />
       <main className="savedMovies">
-        <SearchForm searchMovie={searchMovie} handleSliderClick={handleSliderClick} sliderStatus={sliderStatus}/>
+        <SearchForm searchMovie={saveSearchedMovie} handleSliderClick={clickSlider} sliderStatus={sliderStatusSavedMovies}/>
         <Preloader preloader={preloader} />
-        <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={searchAllMovies.length === 0 ? cards : searchAllMovies} messageForMoviesList={messageForMoviesList} cards={cards} />
+        <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={searchAllMovies.length === 0 && messageForMoviesList==='' ? cards : searchAllMovies} messageForMoviesList={messageForMoviesList} cards={cards} />
       </main>
     <Footer />
     </>
