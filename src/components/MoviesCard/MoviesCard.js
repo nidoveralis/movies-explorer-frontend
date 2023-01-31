@@ -7,7 +7,7 @@ import logoCardDelete from '../../images/logo__cardDel.svg';
 function MoviesCard({ country, director, duration, year, description, image, trailerLink, thumbnail, owner, id, movieId, nameRU, nameEN, clickCard, removeCard, cards }) {
 
   const location = useLocation();
-  const [statusSaved, setStatusSaved] = React.useState(cards.some(item=>item.movieId === movieId));
+  const [statusSaved, setStatusSaved] = React.useState();
 
   const buttonCardClass = `moviesCard-button ${statusSaved? "moviesCard-button_saved" : ""}`
   const buttonCardContentTitle = <p className='moviesCard-button__title'>Сохранить</p>;
@@ -29,6 +29,10 @@ function MoviesCard({ country, director, duration, year, description, image, tra
       clickCard({ country, director, duration, year, description, image, trailerLink, thumbnail, owner, id, movieId, nameRU, nameEN });
   };
 
+  React.useEffect(()=>{
+    setStatusSaved(cards.some(item=>item.movieId === movieId));
+  },[]);
+
   return (
     <div className='moviesCard'>
       {location.pathname === '/saved-movies' && (
@@ -40,7 +44,7 @@ function MoviesCard({ country, director, duration, year, description, image, tra
         </button>
       )}
       <a className='moviesCard-link' href={trailerLink} target='_blank'>
-        <img className='moviesCard-link__img' src={image} alt={nameRU} />
+        <img className='moviesCard-link__img' src={image} alt={nameRU}  />
       </a>
       <p className='moviesCard__title'>{nameRU}</p>
       <div className='moviesCard__time'>{time}</div>
