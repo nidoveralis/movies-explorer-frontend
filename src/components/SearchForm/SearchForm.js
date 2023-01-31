@@ -3,7 +3,7 @@ import './SearchForm.css';
 import LogeSearch from '../../images/iconlogo__search.svg';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({searchMovie, handleSliderClick, sliderStatus, saveSearchedMovie, inputValues}) {
+function SearchForm({searchMovie, handleSliderClick, sliderStatus, inputValues}) {
 
   const [inputValue, setInputValue] = React.useState('');
 
@@ -14,7 +14,6 @@ function SearchForm({searchMovie, handleSliderClick, sliderStatus, saveSearchedM
   function submitForm(e) {
     e.preventDefault();
     searchMovie(inputValue);
-    saveSearchedMovie(inputValue)
   };
 
   React.useEffect(()=>{

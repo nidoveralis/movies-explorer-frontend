@@ -12,34 +12,34 @@ function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, user
   removeCard(card);
  };
 
- function clickSlider() {
-  handleSliderClick();
-  searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
-  };
+ //function clickSlider() {
+//  handleSliderClick();
+//  searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
+//  };
 
- function saveSearchedMovie(data) {
-  localStorage.setItem('searchSavedMovie', JSON.stringify(data));
-  };
+ //function saveSearchedMovie(data) {
+ // localStorage.setItem('searchSavedMovie', JSON.stringify(data));
+ // };
 
-  function searching() {
-    searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
-  };
+  //function searching() {
+  //  searchMovie(JSON.parse(localStorage.getItem('searchSavedMovie')));
+  //};
 
-  React.useEffect(()=>{
-    searching()
-  },[]);
+  //React.useEffect(()=>{
+  //  searching()
+ // },[]);
 
-  React.useEffect(()=>{
-    searching()
-  },[cards]);
+ // React.useEffect(()=>{
+ //   searching()
+ // },[cards]);
 
   return(
     <>
       <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen} />
       <main className="savedMovies">
-        <SearchForm searchMovie={searchMovie} handleSliderClick={clickSlider} sliderStatus={sliderStatus} saveSearchedMovie={saveSearchedMovie} inputValues={JSON.parse(localStorage.getItem('searchSavedMovie'))} />
+        <SearchForm searchMovie={searchMovie} handleSliderClick={handleSliderClick} sliderStatus={sliderStatus}/>
         <Preloader preloader={preloader} />
-        <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={searchAllMovies} messageForMoviesList={messageForMoviesList} cards={cards} />
+        <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={searchAllMovies.length === 0 ? cards : searchAllMovies} messageForMoviesList={messageForMoviesList} cards={cards} />
       </main>
     <Footer />
     </>
