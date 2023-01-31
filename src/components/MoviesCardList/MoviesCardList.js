@@ -1,6 +1,6 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import config from '../../utils/utils';
+import {MOVIE_URL} from '../../utils/constant';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -62,9 +62,9 @@ function MoviesCardList({clickCard, removeCard, userId, moviesList, messageForMo
              duration={card.duration}
              year={card.year} 
              description={card.description}
-             image={config.baseUrl+card.image.url} 
+             image={MOVIE_URL+card.image.url} 
              trailerLink={card.trailerLink}
-             thumbnail={config.baseUrl+card.image.formats.thumbnail.url}
+             thumbnail={MOVIE_URL+card.image.formats.thumbnail.url}
              owner={card.owner}
              movieId={card.id}
              nameRU={card.nameRU} 

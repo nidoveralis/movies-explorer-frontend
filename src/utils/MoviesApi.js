@@ -1,9 +1,12 @@
-import config from "./utils";
+import {MOVIE_URL} from "./constant";
 
 class Api {
-  constructor(data) {
-    this._headers = data.headers;
-    this._baseUrl = data.baseUrl;
+  constructor() {
+    this._headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    this._baseUrl = MOVIE_URL;
   }
 
   _getResponseData(res) {
@@ -22,4 +25,4 @@ class Api {
   }
 }
 
-export const apiMovie = new Api(config);
+export const apiMovie = new Api();

@@ -13,6 +13,7 @@ import Preloader from '../Preloader/Preloader';
 import { Route, Switch, Redirect, useHistory, useLocation } from 'react-router-dom';
 import {apiMovie} from '../../utils/MoviesApi';
 import {api} from '../../utils/MainApi';
+import {TIME_SHOR_FILM} from '../../utils/constant';
 import ProtectedRoute from '../ProtectedRoute';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 
@@ -119,9 +120,9 @@ function App() {
   function removeCard(movie) {
     setPreloader(true);
     api.removeMovie(movie.id || movie._id)
-    .then((res)=>{console.log(res)
+    .then((res)=>{
       const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie.id || movie._id)})
-      setMoviesSavedList(fiteredSavedmovies);console.log(fiteredSavedmovies)
+      setMoviesSavedList(fiteredSavedmovies);
     })
     .catch(err=>console.log(err))
     .finally(() => setPreloader(false));
@@ -143,7 +144,7 @@ function App() {
 
  function searchShortMovie(data) {//поиск коротких фильмов
   if(JSON.parse(localStorage.getItem('slider'))) {
-    const shortMovieList = data.filter(movie=>movie.duration<=40);
+    const shortMovieList = data.filter(movie=>movie.duration<=TIME_SHOR_FILM);
     if(shortMovieList.length===0) {
       setMessageForMoviesList('Ничего не найдено');
     } else {
@@ -171,6 +172,7 @@ function App() {
   };
 
   function searchMovie(data) {//поиск фильмов
+    localStorage.setItem('searchMovie', JSON.stringify(data));
     setPreloader(true);
     if(moviesList.length===0) {
       apiMovie.getMovies()
@@ -189,9 +191,8 @@ function App() {
   };
 
   function searchUserMovie(data) {//поиск сохранённых фильмов
-    //setPreloader(true);
+    setPreloader(true);
     if(moviesSavedList.length===0) {
-     // setPreloader(true);
       api.getMovies()
       .then(res=>{
         const result = filterMovies(data, res.data);

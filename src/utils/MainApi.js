@@ -1,10 +1,12 @@
+import {MAIN_URL} from './constant';
+
 class Api {
-  constructor(data) {
+  constructor() {
     this._headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     };
-    this._baseUrl = 'https://api.movie.diak.nomoredomains.club';
+    this._baseUrl = MAIN_URL;
   }
 
   _getResponseData(res) {
