@@ -220,6 +220,7 @@ React.useEffect(()=>{//информация о пользователе
           setErrServer('');
           setCurrentUser(data);
           setUserId(data._id);
+          setMessage({});
       };
       })
       .catch(err=>{setIsLoggedIn(false);console.log(err)});
