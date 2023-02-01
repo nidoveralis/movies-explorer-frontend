@@ -72,8 +72,10 @@ function App() {
       localStorage.clear();
       setMoviesList([]);
       setMoviesSavedList([]);
+      setSearchAllMovies([])
       setIsLoggedIn(false);
       setErrServer('');
+      setMessage({});
       history.push('/');
       })
       .catch((e)=>{console.log(e)})
