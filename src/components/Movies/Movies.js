@@ -22,7 +22,7 @@ function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, removeCard,
 
   function clickSavedCard(data) {
     const doubledCard = cards.find((item) =>{ return (item.movieId === data.movieId)});
-    removeCard(doubledCard);
+    removeCard(doubledCard._id);
   };
 
   React.useEffect(()=>{

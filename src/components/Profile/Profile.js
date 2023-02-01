@@ -14,7 +14,7 @@ function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, me
    
   const buttonClass = `profile__button-submit ${isValidInput ? "" : "element-form__button-submit_error"} `;
 
-  React.useEffect(()=>{
+   React.useEffect(()=>{
     setName(currentUser.name);
     setEmail(currentUser.email);
    }, [currentUser]);
@@ -71,7 +71,7 @@ function Profile({isLoggedIn, onUpdateUser, closeMenu, isMenuOpen, onSingOut, me
           <p className='profile-info__subtitle profile-info__subtitle_bold'>E-mail</p>
           <input name='email' type='text' className='profile-info__input profile-info__subtitle' value={email} disabled={buttonState} onChange={handleEmailInput}  minLength='2' maxLength='40' required />
         </fieldset>
-        <span className={`profile__span ${isErrorInput.name ? "profile__span_error" : ""} `}>{isErrorInput.name}</span>
+        <span className={`profile__span ${isErrorInput.email ? "profile__span_error" : ""} `}>{isErrorInput.email}</span>
           <div className='profile__links'>
             <span className={`profile__span ${message.err ? "profile__span_error" : ""} `}>{message.message}</span>
             {buttonState ? <input type='button' value='Редактировать' className='profile__link'  onClick={chengeButtonState} /> :

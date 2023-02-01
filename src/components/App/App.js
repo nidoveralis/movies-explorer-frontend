@@ -96,21 +96,11 @@ function App() {
     .finally(() => setPreloader(false));
   };
 
-  function getSavedMovies() {
-    setPreloader(true);
-    api.getMovies()
-    .then(res=> {
-      setMoviesSavedList(res.data);
-    })
-    .catch(err=>console.log(err))
-    .finally(() => setPreloader(false));
-  };
-
   function likeCard(movie) {//добавить фильм
     setPreloader(true);
     api.addMovies(movie)
-    .then(()=>{
-   //   getSavedMovies();
+    .then((data) => {
+     setMoviesSavedList([data, ...moviesSavedList]);
     })
     .catch(err=>console.log(err))
     .finally(() => setPreloader(false));
@@ -118,9 +108,9 @@ function App() {
 
   function removeCard(movie) {
     setPreloader(true);
-    api.removeMovie(movie.id || movie._id)
-    .then((res)=>{
-      const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie.id || movie._id)})
+    api.removeMovie(movie)
+    .then(()=>{
+      const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie)});
       setMoviesSavedList(fiteredSavedmovies);
     })
     .catch(err=>console.log(err))
@@ -137,7 +127,6 @@ function App() {
 }}
 
   function filterMovies(data, list, slider) {//фильтр
-    console.log(data, list, slider)
       const foundCards = list.filter(movie=>{
         if(movie.nameRU.toLowerCase().trim().indexOf(data.toLowerCase())!==-1 || movie.nameEN.toLowerCase().indexOf(data.toLowerCase())!==-1) {
          return movie
@@ -188,32 +177,35 @@ function App() {
       setPreloader(false);
       setSearchSavedMovies(result ? result : []);
       setMessageForUserMoviesList(!result || result.length===0 ? 'Ничего не найдено' : '');
-    }} else if(data==='') {
+    }
+  } else if(data==='') {
       setSearchSavedMovies(searchShortMovie(moviesSavedList, slider))
       setMessageForUserMoviesList('');
     }
   };
 
   React.useEffect(()=>{//загрузка фильмов
-      setPreloader(true);
-      api.getMovies()
-      .then(data=>{
-        setMoviesSavedList(data.data);
-      })
+      if(isLoggedIn){
+        setPreloader(true)
+        api.getMovies()
+        .then(data=>{
+          setMoviesSavedList(data.data);
+        })
       .catch(err=>console.log(err))
       .finally(() => setPreloader(false));
+    }
     },[location]);
 
-  React.useEffect(()=>{//загрузка фильмов 
-    if(isLoggedIn){
-      setPreloader(true);
-      api.getMovies()
-      .then(data=>{
-        setMoviesSavedList(data.data);
-      })
-      .catch(err=>console.log(err))
-      .finally(() => setPreloader(false));
-    }},[currentUser,isLoggedIn]);
+ // React.useEffect(()=>{//загрузка фильмов 
+ //   if(isLoggedIn){
+ //     setPreloader(true);
+//      api.getMovies()
+//      .then(data=>{
+//        setMoviesSavedList(data.data);
+//      })
+//      .catch(err=>console.log(err))
+//      .finally(() => setPreloader(false));
+ //   }},[currentUser,isLoggedIn]);
 
 React.useEffect(()=>{//информация о пользователе
   const pathName = location.pathname;

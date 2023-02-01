@@ -26,7 +26,7 @@ function MoviesCard({ country, director, duration, year, description, image, tra
   };
 
   function removeSavedFilm() {
-      clickCard({ country, director, duration, year, description, image, trailerLink, thumbnail, owner, id, movieId, nameRU, nameEN });
+      clickCard(id);
   };
 
   React.useEffect(()=>{

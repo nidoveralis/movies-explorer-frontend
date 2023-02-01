@@ -4,7 +4,7 @@ import {MOVIE_URL} from '../../utils/constant';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-function MoviesCardList({clickCard, removeCard, userId, moviesList, messageForMoviesList, cards}) {
+function MoviesCardList({clickCard, removeCard, moviesList, messageForMoviesList, cards}) {
 
     const location = useLocation();
 
