@@ -15,20 +15,22 @@ function Navigation({isLoggedIn, isOpenMenu, onClose}) {
               <Route path='/signin'>
             </Route>
             {isLoggedIn ? 
-            <><div className={classNameMenu}>
+            <><div className={`${classNameMenu} navigation__menu_main`} >
                 <button  className={classNameCloseButton} onClick={onClose}></button>
                 <div className="navigation__links">
-                  <Link to='/' className="navigation__link link link_hidden">Главная</Link>
-                  <Link to='/movies' className="navigation__link link">Фильмы</Link>
-                  <Link to='/saved-movies' className="navigation__link link">Сохранённые фильмы</Link>
+                  <Link to='/' className="navigation__link link link_hidden" onClick={onClose}>Главная</Link>
+                  <Link to='/movies' className="navigation__link link" onClick={onClose}>Фильмы</Link>
+                  <Link to='/saved-movies' className="navigation__link link" onClick={onClose}>Сохранённые фильмы</Link>
                 </div>
-                <Link to='/profile'  className="link-profile link ">
+                <Link to='/profile'  className="link-profile link"  onClick={onClose}>
                   <img alt='Профиль' src={LogoProfile} className="link-profile__image" />
                   <p className="link-profile__title">Аккаунт</p>
                 </Link>
                 </div>
-                <span className="navigation__burger-menu" onClick={onClose}></span></> :
-            <><div className={`${classNameMenu} navigation__menu_main`}>
+                <div className="burger-conteiner" onClick={onClose}>
+                  <span className="navigation__burger-menu"></span>
+                </div> </> :
+            <><div className={`${classNameMenu}`}>
                 <Link to='/signup' className="navigation__signup link">Регистрация</Link>
                 <Link to='/signin' className="navigation__signin link">Войти</Link>
               </div></>}
