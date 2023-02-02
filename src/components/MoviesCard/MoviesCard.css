@@ -103,6 +103,11 @@
   .moviesCard__time {
     margin-top: 14px;
   }
+
+  .moviesCard-link__img {
+    min-height: 201px;
+    max-height: 201px;
+  }
   
 }
 
@@ -121,7 +126,10 @@
     margin-left: 14px;
   }
 
-  
+  .moviesCard-link__img {
+    min-height: 190px;
+    max-height: 190px;
+  }
 }
 
 @media screen and (max-width: 360px) {
@@ -138,4 +146,8 @@
     margin-top: 17px;
   }
   
+  .moviesCard-link__img {
+    min-height: 168px;
+    max-height: 168px;
+  }
 }
