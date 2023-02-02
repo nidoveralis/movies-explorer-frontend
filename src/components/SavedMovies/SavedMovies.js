@@ -7,7 +7,6 @@ import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
 function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, preloader}) {
-
   const [sliderStatusSavedMovies, setSliderStatusSavedMovies] = React.useState();
   const [inputValue, setInputValue] = React.useState('');
   
@@ -18,7 +17,7 @@ function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, user
  function clickSlider() {
   setSliderStatusSavedMovies(!sliderStatusSavedMovies);
   localStorage.setItem('sliderSavedMovies', JSON.stringify(!sliderStatusSavedMovies));
-  searchMovie(inputValue, JSON.parse(localStorage.getItem('sliderSavedMovies')))
+  searchMovie(inputValue, JSON.parse(localStorage.getItem('sliderSavedMovies')));
   };
 
  function searchinghMovie(data) {
@@ -41,7 +40,7 @@ function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, user
       <main className="savedMovies">
         <SearchForm searchMovie={searchinghMovie} handleSliderClick={clickSlider} sliderStatus={sliderStatusSavedMovies}/>
         <Preloader preloader={preloader} />
-        <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={searchAllMovies.length === 0 && messageForMoviesList==='' ? cards : searchAllMovies} messageForMoviesList={cards.length===0 ? 'У вас нет сохранённыъ фильмов' : messageForMoviesList} cards={cards} />
+        <MoviesCardList clickCard={deleteCard} userId={userId}  moviesList={searchAllMovies.length === 0 && messageForMoviesList==='' ? cards : searchAllMovies} messageForMoviesList={cards.length===0 ? 'У вас нет сохранённых фильмов' : messageForMoviesList} cards={cards} />
       </main>
     <Footer />
     </>

@@ -138,76 +138,62 @@ function App() {
   };
 
   function searchMovie(data, slider) {//поиск фильмов
-    if(data === '' || data === null) {
+    if(data === '' || data == null) {
       setMessageForMoviesList('Нужно ввести ключевое слово');
     }else if(data !== '') {
-        localStorage.setItem('searchMovie', JSON.stringify(data));
+      localStorage.setItem('searchMovie', JSON.stringify(data));
       setPreloader(true);
-      if(moviesList.length===0) {
-        apiMovie.getMovies()
-        .then(res=>{
-          const result = filterMovies(data, res, slider);
-          setMoviesList(res);
-          setSearchAllMovies(result ? result : []);
-          })
-        .catch(err=>console.log(err))
-        .finally(() => setPreloader(false));
-      }else {
-        const result = filterMovies(data, moviesList, slider);
-        setPreloader(false);
-        setSearchAllMovies(result ? result : []);
-        setMessageForMoviesList('Ничего не найдено');
-      }
+      const result = filterMovies(data, moviesList, slider);
+      setPreloader(false);
+      setSearchAllMovies(result ? result : []);
+      setMessageForMoviesList('Ничего не найдено');
     }
   };
 
   function searchUserMovie(data, slider) {//поиск сохранённых фильмов
-    if(data && data!==''){
-      setPreloader(true);
-    if(moviesSavedList.length===0) {
-      api.getMovies()
-      .then(res=>{
-        const result = filterMovies(data, res.data,slider);
-        setMoviesSavedList(res.data);
-        setSearchSavedMovies(result ? result : []);
-        setPreloader(false);
-        })
-      .catch(err=>console.log(err))
-      .finally(() => setPreloader(false));
-    }else {
-      const result = filterMovies(data, moviesSavedList, slider);
+    setPreloader(true);
+  if(data && data!==''){
+    const result = filterMovies(data, moviesSavedList, slider);
+    setSearchSavedMovies(result);
+    setPreloader(false);
+    setMessageForUserMoviesList(!result || result.length===0 ? 'Ничего не найдено' : '');
+    } else if(data==='') {
+      const resultSavedFilms = searchShortMovie(moviesSavedList, slider);
+      setSearchSavedMovies(resultSavedFilms);
       setPreloader(false);
-      setSearchSavedMovies(result ? result : []);
-      setMessageForUserMoviesList(!result || result.length===0 ? 'Ничего не найдено' : '');
-    }
-  } else if(data==='') {
-      setSearchSavedMovies(searchShortMovie(moviesSavedList, slider))
-      setMessageForUserMoviesList('');
-    }
-  };
+      setMessageForUserMoviesList(resultSavedFilms.length===0 ? 'Ничего не найдено' : '');    
+    };
+}
 
-  React.useEffect(()=>{//загрузка фильмов
-      if(isLoggedIn){
-        setPreloader(true)
-        api.getMovies()
-        .then(data=>{
-          setMoviesSavedList(data.data);
+  //React.useEffect(()=>{//загрузка фильмов
+    //  if(isLoggedIn){
+      //  setPreloader(true)
+       // api.getMovies()
+      //  .then(data=>{
+      //    setMoviesSavedList(data.data);
+      //  })
+     // .catch(err=>console.log(err))
+    //  .finally(() => setPreloader(false));
+   // }
+   // },[location]);
+
+  React.useEffect(()=>{//загрузка фильмов 
+    if(isLoggedIn){
+      setPreloader(true);
+      api.getMovies()
+      .then(data=>{
+        setMoviesSavedList(data.data);
+      })
+      .catch(err=>console.log(err))
+      .finally(() => setPreloader(false));
+      apiMovie.getMovies()
+      .then(res=>{
+        setMoviesList(res);
         })
       .catch(err=>console.log(err))
       .finally(() => setPreloader(false));
-    }
-    },[location]);
 
- // React.useEffect(()=>{//загрузка фильмов 
- //   if(isLoggedIn){
- //     setPreloader(true);
-//      api.getMovies()
-//      .then(data=>{
-//        setMoviesSavedList(data.data);
-//      })
-//      .catch(err=>console.log(err))
-//      .finally(() => setPreloader(false));
- //   }},[currentUser,isLoggedIn]);
+    }},[currentUser,isLoggedIn]);
 
 React.useEffect(()=>{//информация о пользователе
   const pathName = location.pathname;
