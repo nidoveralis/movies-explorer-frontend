@@ -155,7 +155,13 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 484px) {
+  .aboutProject-grid__item {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 430px) {
   .aboutProject {
     padding: 73px 18px;
   }
@@ -174,7 +180,6 @@
   }
 
   .aboutProject-grid__item {
-    font-size: 11px;
     padding-left: 0;
     padding-top: 12px;
   }
