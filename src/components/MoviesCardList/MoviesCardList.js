@@ -1,6 +1,6 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import {MOVIE_URL} from '../../utils/constant';
+import {MOVIE_URL, MORE_CARDS_FOR_DESKTOP, SHOW_CARDS_FOR_DESKTOP, MORE_CARDS_FOR_TABLET_AND_PHONE, SHOW_CARDS_FOR_TABLET, SHOW_CARDS_FOR_PHONE} from '../../utils/constant';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -22,19 +22,19 @@ function MoviesCardList({clickCard, removeCard, moviesList, messageForMoviesList
 
     React.useEffect(()=>{
       if(windowSize < 1279) {
-        setCardListSize(2)
+        setCardListSize(MORE_CARDS_FOR_TABLET_AND_PHONE)
       }else if (windowSize >= 1280 ) {
-        setCardListSize(3)
+        setCardListSize(MORE_CARDS_FOR_DESKTOP)
       }
     },[windowSize]);
 
     React.useEffect(() => {
     if(windowSize >= 1280) {
-      setfirstSize(12);
+      setfirstSize(SHOW_CARDS_FOR_DESKTOP);
     }else if (windowSize < 1280 && windowSize >= 768) {
-      setfirstSize(8);
+      setfirstSize(SHOW_CARDS_FOR_TABLET);
     }else if (windowSize < 768) {
-      setfirstSize(5);
+      setfirstSize(SHOW_CARDS_FOR_PHONE);
     }
     },[windowSize]);
 

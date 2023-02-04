@@ -13,7 +13,7 @@ import Preloader from '../Preloader/Preloader';
 import { Route, Switch, Redirect, useHistory, useLocation } from 'react-router-dom';
 import {apiMovie} from '../../utils/MoviesApi';
 import {api} from '../../utils/MainApi';
-import {TIME_SHOR_FILM} from '../../utils/constant';
+import {SHORTMOVIES_DURATION} from '../../utils/constant';
 import ProtectedRoute from '../ProtectedRoute';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 
@@ -121,7 +121,7 @@ function App() {
 
  function searchShortMovie(data, slider) {//поиск коротких фильмов
   if(slider) {
-    const shortMovieList = data.filter(movie=>movie.duration<=TIME_SHOR_FILM);
+    const shortMovieList = data.filter(movie=>movie.duration<=SHORTMOVIES_DURATION);
       setMessageForMoviesList(shortMovieList.length===0 ? 'Ничего не найдено' : '');
       return shortMovieList;
   } else {
@@ -147,7 +147,7 @@ function App() {
       setPreloader(false);
       setSearchAllMovies(result ? result : []);
       setMessageForMoviesList('Ничего не найдено');
-    }
+    };
   };
 
   function searchUserMovie(data, slider) {//поиск сохранённых фильмов
@@ -163,19 +163,7 @@ function App() {
       setPreloader(false);
       setMessageForUserMoviesList(resultSavedFilms.length===0 ? 'Ничего не найдено' : '');    
     };
-}
-
-  //React.useEffect(()=>{//загрузка фильмов
-    //  if(isLoggedIn){
-      //  setPreloader(true)
-       // api.getMovies()
-      //  .then(data=>{
-      //    setMoviesSavedList(data.data);
-      //  })
-     // .catch(err=>console.log(err))
-    //  .finally(() => setPreloader(false));
-   // }
-   // },[location]);
+};
 
   React.useEffect(()=>{//загрузка фильмов 
     if(isLoggedIn){
