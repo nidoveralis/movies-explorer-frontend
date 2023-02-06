@@ -103,6 +103,8 @@ function App() {
     api.addMovies(movie)
     .then((data) => {
      setMoviesSavedList([data, ...moviesSavedList]);
+     localStorage.setItem('savedMovies',JSON.stringify([data, ...moviesSavedList]));
+
     })
     .catch(err=>console.log(err))
     .finally(() => setPreloader(false));
@@ -114,6 +116,7 @@ function App() {
     .then(()=>{
       const fiteredSavedmovies = moviesSavedList.filter(item=>{return (item._id!==movie)});
       setMoviesSavedList(fiteredSavedmovies);
+      localStorage.setItem('savedMovies',JSON.stringify(fiteredSavedmovies));
     })
     .catch(err=>console.log(err))
     .finally(() => setPreloader(false));
@@ -138,15 +141,19 @@ function App() {
   };
 
   function searchMovie(data, slider) {//поиск фильмов
-    if(data === '' || data == null) {
+    if(data === '' || data == null ) {
       setMessageForMoviesList('Нужно ввести ключевое слово');
+      localStorage.setItem('searchAllMovies',JSON.stringify([]));
+      setSearchAllMovies([])
     }else if(data !== '') {
-      localStorage.setItem('searchMovie', JSON.stringify(data));
       setPreloader(true);
-      const result = filterMovies(data, moviesList, slider);
-      setPreloader(false);
-      setSearchAllMovies(result ? result : []);
-      setMessageForMoviesList('Ничего не найдено');
+      const allMovies =JSON.parse(localStorage.getItem('AllMovies'));
+      setMoviesList(allMovies)
+        const result = filterMovies(data, moviesList, slider);
+        setPreloader(false);
+        setSearchAllMovies(result);
+        setMessageForMoviesList(result.length===0 ? 'Ничего не найдено' : '');
+        localStorage.setItem('searchAllMovies',JSON.stringify(result));
     };
   };
 
@@ -157,11 +164,12 @@ function App() {
     setSearchSavedMovies(result);
     setPreloader(false);
     setMessageForUserMoviesList(!result || result.length===0 ? 'Ничего не найдено' : '');
+    localStorage.setItem('searchSavedMovies',JSON.stringify(result)); 
     } else if(data==='') {
       const resultSavedFilms = searchShortMovie(moviesSavedList, slider);
       setSearchSavedMovies(resultSavedFilms);
       setPreloader(false);
-      setMessageForUserMoviesList(resultSavedFilms.length===0 ? 'Ничего не найдено' : '');    
+      setMessageForUserMoviesList(resultSavedFilms.length===0 ? 'Ничего не найдено' : '');
     };
 };
 
@@ -170,18 +178,27 @@ function App() {
       setPreloader(true);
       api.getMovies()
       .then(data=>{
+        localStorage.setItem('savedMovies',JSON.stringify(data.data));
         setMoviesSavedList(data.data);
       })
       .catch(err=>console.log(err))
       .finally(() => setPreloader(false));
       apiMovie.getMovies()
       .then(res=>{
+        localStorage.setItem('AllMovies',JSON.stringify(res));
         setMoviesList(res);
         })
       .catch(err=>console.log(err))
       .finally(() => setPreloader(false));
-
+      //setSearchAllMovies(JSON.parse(localStorage.getItem('searchAllMovies')))
     }},[currentUser,isLoggedIn]);
+
+    React.useEffect(() => {
+      if (localStorage.getItem('AllMovies')) {
+        const movies = JSON.parse(localStorage.getItem('AllMovies'));
+        setMoviesList(movies);
+      }
+    }, [currentUser]);
 
 React.useEffect(()=>{//информация о пользователе
   const pathName = location.pathname;

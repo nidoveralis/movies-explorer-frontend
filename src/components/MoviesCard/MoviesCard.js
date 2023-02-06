@@ -30,7 +30,7 @@ function MoviesCard({ country, director, duration, year, description, image, tra
   };
 
   React.useEffect(()=>{
-    setStatusSaved(cards.some(item=>item.movieId === movieId));
+    setStatusSaved(JSON.parse(localStorage.getItem('savedMovies')).some(item=>item.movieId === movieId));
   },[]);
 
   return (

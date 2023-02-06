@@ -8,15 +8,17 @@ import Footer from '../Footer/Footer';
 
 function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, preloader }) {
 
-  const [sliderStatus, setsliderStatus] = React.useState();
+  const [sliderStatus, setSliderStatus] = React.useState(false);
+  const [movies, setMovies] = React.useState([]);
 
   function clickSlider() {
-    setsliderStatus(!sliderStatus);
+    setSliderStatus(!sliderStatus);
     localStorage.setItem('slider', JSON.stringify(!sliderStatus));
-    searchMovie(JSON.parse(localStorage.getItem('searchMovie')), JSON.parse(localStorage.getItem('slider')));
+    searchMovie(JSON.parse(localStorage.getItem('inputMovie')), JSON.parse(localStorage.getItem('slider')));
     };
 
   function searchinghMovie(data) {
+    localStorage.setItem('inputMovie', JSON.stringify(data));
     searchMovie(data, JSON.parse(localStorage.getItem('slider')));
   };
 
@@ -26,17 +28,22 @@ function Movies({isLoggedIn, cards, closeMenu, isMenuOpen, likeCard, removeCard,
   };
 
   React.useEffect(()=>{
-    searchMovie(JSON.parse(localStorage.getItem('searchMovie')), JSON.parse(localStorage.getItem('slider')));
-    setsliderStatus(JSON.parse(localStorage.getItem('slider')) || false)
+    searchMovie(JSON.parse(localStorage.getItem('inputMovie')), JSON.parse(localStorage.getItem('slider')));
+    setSliderStatus(JSON.parse(localStorage.getItem('slider')) || false)
   },[]);
+
+  React.useEffect(()=>{
+    
+    setMovies(searchAllMovies)
+  },[searchAllMovies]);
 
   return(
     <>
       <Header isLoggedIn={isLoggedIn} onClose={closeMenu} isOpenMenu={isMenuOpen}/>
       <main className="movies">
-        <SearchForm searchMovie={searchinghMovie} handleSliderClick={clickSlider} sliderStatus={sliderStatus} inputValues={JSON.parse(localStorage.getItem('searchMovie'))}/>
+        <SearchForm searchMovie={searchinghMovie} handleSliderClick={clickSlider} sliderStatus={sliderStatus} inputValues={JSON.parse(localStorage.getItem('inputMovie'))}/>
         <Preloader preloader={preloader} />
-        <MoviesCardList clickCard={likeCard} removeCard={clickSavedCard} userId={userId} moviesList={searchAllMovies} messageForMoviesList={messageForMoviesList} cards={cards} />
+        <MoviesCardList clickCard={likeCard} removeCard={clickSavedCard} userId={userId} moviesList={movies} messageForMoviesList={messageForMoviesList} cards={cards} />
       </main>
       <Footer />
     </>

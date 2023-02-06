@@ -71,7 +71,7 @@ function MoviesCardList({clickCard, removeCard, moviesList, messageForMoviesList
              nameEN={card.nameEN}
              clickCard={clickCard}
              removeCard={removeCard} 
-             cards={cards}  
+             cards={cards}
               />
            )) 
       )}

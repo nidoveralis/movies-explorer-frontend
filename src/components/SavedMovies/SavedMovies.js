@@ -5,6 +5,8 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
+import { Route, Switch, Redirect, useHistory, useLocation } from 'react-router-dom';
+
 
 function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, userId, searchAllMovies, searchMovie, messageForMoviesList, preloader}) {
   const [sliderStatusSavedMovies, setSliderStatusSavedMovies] = React.useState();
@@ -33,6 +35,15 @@ function SavedMovies({isLoggedIn, cards, closeMenu, isMenuOpen, removeCard, user
   React.useEffect(()=>{
     searchMovie(inputValue, JSON.parse(localStorage.getItem('sliderSavedMovies')))
   },[cards]);
+
+  const location = useLocation();
+  const history = useHistory();
+  React.useEffect(()=>{
+    console.log(JSON.parse(localStorage.getItem('searchSavedMovies')))
+  },[]);
+  React.useEffect(()=>{
+    console.log('kjjjj')
+  },[history]);
 
   return(
     <>
