@@ -190,7 +190,6 @@ function App() {
         })
       .catch(err=>console.log(err))
       .finally(() => setPreloader(false));
-      //setSearchAllMovies(JSON.parse(localStorage.getItem('searchAllMovies')))
     }},[currentUser,isLoggedIn]);
 
     React.useEffect(() => {
