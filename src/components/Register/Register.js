@@ -1,11 +1,11 @@
 import './Register.css';
 import Form from '../Form/Form';
 
-function Register() {
+function Register({formValues, errServer}) {
 
   return (
     <>
-      <Form title='Добро пожаловать!' submitButton='Зарегистрироваться' linkTitle='Уже зарегистрированы? ' link='Войти' />
+      <Form title='Добро пожаловать!' submitButton='Зарегистрироваться' linkTitle='Уже зарегистрированы? ' linkName='Войти' link='/signin' formValues={formValues} errServer={errServer}/>
     </>
   )
 

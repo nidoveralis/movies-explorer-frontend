@@ -1,23 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './SearchForm.css';
 import LogeSearch from '../../images/iconlogo__search.svg';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm() {
+function SearchForm({searchMovie, handleSliderClick, sliderStatus, inputValues}) {
 
-  const [sliderStatus, setSliderStatus] = React.useState(true);
-  function handleSliderClick() {
-    setSliderStatus(!sliderStatus);
+  const [inputValue, setInputValue] = React.useState('');
+
+  function changeValue(e) {
+    setInputValue(e.target.value);
+  };
+
+  function submitForm(e) {
+    e.preventDefault();
+    searchMovie(inputValue);
+  };
+
+  React.useEffect(()=>{
+    if(inputValues!==null){
+    setInputValue( inputValues );
   }
+  },[inputValues]);
+
   return(
     <section className="search">
-      <form className="search-form">
+      <form className="search-form" onSubmit={submitForm} noValidate>
         <div className="search-form__conteiner">
           <img src={LogeSearch} alt='Поиск' className="search-form__img" />
           <fieldset className="search-form__fieldset">
-            <input placeholder="Фильм" type='text' className="search-form__input" required />
+            <input placeholder="Фильм" type='text' className="search-form__input" required onChange={changeValue} value={inputValue} />
           </fieldset>
-        <button className="search-form__button">Найти</button>
+        <button className="search-form__button" type='submit' >Найти</button>
         <span className="search-form__line"></span>
         </div>
         <FilterCheckbox onClickChechbox={handleSliderClick} sliderClick={sliderStatus}/>

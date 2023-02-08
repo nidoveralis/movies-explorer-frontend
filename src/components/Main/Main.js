@@ -7,10 +7,11 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main() {
+function Main({isLoggedIn,closeMenu, isMenuOpen }) {
+  
   return (
     <>
-    <Header theme={'header_theme-darck'}/>
+    <Header isLoggedIn={isLoggedIn} theme={'header_theme-darck'} onClose={closeMenu} isOpenMenu={isMenuOpen} />
       <main className='content'>
         <Promo />
         <AboutProject />
@@ -24,5 +25,3 @@ function Main() {
 }
 
 export default Main;
-
-////AboutProject измени повторяющиеся в разных размерах отступы и шрифт
