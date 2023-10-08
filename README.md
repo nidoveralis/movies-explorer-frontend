@@ -26,6 +26,7 @@
 
 - JavaScript
 - React JS
+- API
 - CSS
 - HTML
   
